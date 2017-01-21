@@ -1,0 +1,16 @@
+{
+  "name": "map_app",
+  "version": "1.0.0",
+  "description": "App that shows best locations from Porto on a map. Uses Google Maps API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nuno Machado",
+  "license": "ISC",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-cssmin": "^1.0.2",
+    "grunt-contrib-uglify": "^2.0.0"
+  }
+}
