@@ -22,6 +22,7 @@ class Marker(Base):
     latitude = Column(Float)
     longitude = Column(Float)
     description = Column(String(250))
+    type = Column(String(20))
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
 
