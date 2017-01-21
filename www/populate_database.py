@@ -22,6 +22,7 @@ class Populate_database:
 
     markers = [
         {
+            'title': 'Place to go eat something',
             'latitude': 41.1562453,
             'longitude': -8.6613685,
             'description': 'My city',
@@ -49,6 +50,7 @@ class Populate_database:
     def add_markers(self):
         for m in self.markers:
             self.session.add(Marker(
+                title=m['title'],
                 latitude=m['latitude'],
                 longitude=m['longitude'],
                 description=m['description'],

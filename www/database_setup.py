@@ -19,6 +19,7 @@ class Marker(Base):
     __tablename__ = 'marker'
 
     id = Column(Integer, primary_key=True)
+    title = Column(String(250))
     latitude = Column(Float)
     longitude = Column(Float)
     description = Column(String(250))
@@ -29,6 +30,7 @@ class Marker(Base):
     @property
     def serialize(self):
         return {
+            "title": self.title,
             "latitude": self.latitude,
             "longitude": self.longitude,
             "description": self.description,
