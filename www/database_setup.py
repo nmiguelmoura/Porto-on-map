@@ -28,8 +28,8 @@ class Marker(Base):
     @property
     def serialize(self):
         return {
-            "latitude": self.lat,
-            "longitude": self.long,
+            "latitude": self.latitude,
+            "longitude": self.longitude,
             "description": self.description,
             "user_id": self.user.name
         }
