@@ -16,11 +16,11 @@ class User(Base):
 
 class Marker(Base):
 
-    __tablename_ = 'local'
+    __tablename__ = 'marker'
 
     id = Column(Integer, primary_key=True)
-    lat = Column(Float)
-    long = Column(Float)
+    latitude = Column(Float)
+    longitude = Column(Float)
     description = Column(String(250))
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
@@ -31,10 +31,13 @@ class Marker(Base):
             "latitude": self.lat,
             "longitude": self.long,
             "description": self.description,
-            "creator": self.user.name
+            "user_id": self.user.name
         }
 
-class Favourites(Base):
+class Favourite(Base):
+
+    __tablename__ = 'favourite'
+
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
