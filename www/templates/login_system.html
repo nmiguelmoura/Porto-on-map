@@ -1,0 +1,138 @@
+<div class="wrapper content-white-background">
+    <div class="col-sm-12-12 provider-login">
+        <!--LOAD PRE-REQUISITES FOR GOOGLE SIGN IN -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+
+        <script src="//apis.google.com/js/platform.js?onload=start"></script>
+
+        <!-- END PRE-REQUISITES FOR GOOGLE SIGN IN -->
+
+        <!-- GOOGLE PLUS SIGN IN BUTTON-->
+
+        <div id="signInButton">
+          <span class="g-signin"
+                data-scope="openid email"
+                data-clientid="691030277130-tjt984nmta3ca48mq74umk0egnhncksk.apps.googleusercontent.com"
+                data-redirecturi="postmessage"
+                data-accesstype="offline"
+                data-cookiepolicy="single_host_origin"
+                data-callback="signInCallback"
+                data-approvalprompt="force">
+          </span>
+        </div>
+
+        <script>
+            function signInCallback(authResult) {
+                if (authResult['code']) {
+                    $('#signInButton').attr('style', 'display: none');
+                    $('#fbSignInButton').attr('style', 'display: none');
+                    $('.provider-login').attr('style', 'display: none');
+                    $.ajax({
+                        type: 'POST',
+                        url: '/gconnect?state={{ STATE }}',
+                        processData: false,
+                        data: authResult['code'],
+                        contentType: 'application/octet-stream; charset=utf-8',
+                        success: function (result) {
+                            if (result) {
+                                $('#result').html(result);
+                                setTimeout(function () {
+                                    //window.location.href = "/restaurants/";
+                                }, 4000)
+                            } else if (authResult['error']) {
+                                console.log('There was an error: ' + authResult['error']);
+                            }
+                        }
+                    });
+                } else {
+                    $('#result').html('Failed to make a server side call. Check your configuration and console.');
+                }
+            }
+        </script>
+
+        <!-- END GOOGLE PLUS SIGN IN BUTTON -->
+    </div>
+
+    <div class="col-sm-12-12 provider-login">
+        <!-- FACEBOOK LOG IN -->
+
+        <script>
+            window.fbAsyncInit = function () {
+                FB.init({
+                    appId: '154135205073967',
+                    cookie: true,  // enable cookies to allow the server to access
+                                   // the session
+                    xfbml: true,  // parse social plugins on this page
+                    version: 'v2.2' // use version 2.2
+                });
+            };
+            // Load the SDK asynchronously
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+            // Here we run a very simple test of the Graph API after login is
+            // successful.  See statusChangeCallback() for when this call is made.
+            function sendTokenToServer() {
+                $('#signInButton').attr('style', 'display: none');
+                $('#fbSignInButton').attr('style', 'display: none');
+                $('.provider-login').attr('style', 'display: none');
+
+                var access_token = FB.getAuthResponse()['accessToken'];
+                console.log(access_token);
+                console.log('Welcome!  Fetching your information.... ');
+                FB.api('/me', function (response) {
+                    console.log('Successful login for: ' + response.name);
+                    $.ajax({
+                        type: 'POST',
+                        url: '/fbconnect?state={{ STATE }}',
+                        processData: false,
+                        data: access_token,
+                        contentType: 'application/octet-stream; charset=utf-8',
+                        success: function (result) {
+                            // Handle or verify the server response if necessary.
+                            if (result) {
+                                $('#result').html(result);
+                                setTimeout(function () {
+                                    //window.location.href = "/restaurants/";
+                                }, 4000);
+
+                            } else {
+                                $('#result').html('Failed to make a server-side call. Check your configuration and console.');
+                                $('#signInButton').attr('style', 'display: display');
+                                $('#fbSignInButton').attr('style', 'display: display');
+                                $('.provider-login').attr('style', 'display: display');
+                            }
+                        }
+
+                    });
+                });
+            }
+        </script>
+
+        <div id="fbSignInButton">
+            <button>
+                <fb:login-button scope="public_profile,email"
+                                 onlogin="sendTokenToServer();">
+                    <a href='javascript:sendTokenToServer()'>Login with
+                        Facebook</a>
+                </fb:login-button>
+            </button>
+        </div>
+
+        <!-- END FACEBOOK SIGN IN BUTTON -->
+    </div>
+
+    <div id="result" class="wrapper-inside">
+
+    </div>
+
+</div>
+
+<script>
+    $('#login-button').attr('style', 'display: none');
+</script>
