@@ -6,13 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <header>
-        <h1>Get to Know Porto</h1>
-    </header>
-    <section></section>
-    <aside>
-        {% include "login_system.html" %}
-        <button></button>
-    </aside>
+<header>
+    <h1>Get to Know Porto</h1>
+</header>
+<section>
+
+</section>
+<aside>
+    <div>
+        <div>
+            <p>Locals</p>
+        </div>
+        <div>
+            <label><input type="checkbox">Monuments</label>
+            <label><input type="checkbox">Museums</label>
+            <label><input type="checkbox">Hotels</label>
+            <label><input type="checkbox">Restaurants</label>
+            <label><input type="checkbox">Coffee Shops</label>
+            <label><input type="checkbox">Others</label>
+        </div>
+    </div>
+    <div>
+        <p>My area</p>
+    </div>
+    <div>
+        <div>
+            {% include "login_system.html" %}
+        </div>
+        <div>
+            <label><input type="checkbox">Favourites</label>
+            <label><input type="checkbox">My shares</label>
+        </div>
+    </div>
+    <button></button>
+</aside>
 </body>
 </html>
