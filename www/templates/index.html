@@ -4,41 +4,60 @@
     <meta charset="UTF-8">
     <title>Porto on map</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700"
+          rel="stylesheet">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/reset.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/grid.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/general.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/header.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/aside.css') }}">
 </head>
 <body>
-<header>
-    <h1>Get to Know Porto</h1>
-</header>
-<section>
+<div class="global-container">
+    <header>
+        <h1 class="col-sm-12-12">Get to Know Porto</h1>
+    </header>
+    <section>
 
-</section>
-<aside>
-    <div>
-        <div>
-            <p>Locals</p>
+    </section>
+    <aside class="wrapper aside-in">
+        <div class="aside-switch">
+            <button class="menu-in"></button>
         </div>
-        <div>
-            <label><input type="checkbox">Monuments</label>
-            <label><input type="checkbox">Museums</label>
-            <label><input type="checkbox">Hotels</label>
-            <label><input type="checkbox">Restaurants</label>
-            <label><input type="checkbox">Coffee Shops</label>
-            <label><input type="checkbox">Others</label>
+        <div class="aside-content">
+            <div class="wrapper-inside aside-content-area">
+                <div class="padded-col-sm-12-12">
+                    <h2 class="col-sm-12-12">Locals</h2>
+                </div>
+                <div class="padded-col-sm-12-12">
+                    <label><input type="checkbox">Monuments</label>
+                    <label><input type="checkbox">Museums</label>
+                    <label><input type="checkbox">Hotels</label>
+                    <label><input type="checkbox">Restaurants</label>
+                    <label><input type="checkbox">Coffee Shops</label>
+                    <label><input type="checkbox">Others</label>
+                </div>
+            </div>
+            <div class="wrapper-inside aside-content-area">
+                <div class="padded-col-sm-12-12">
+                    <h2 class="col-sm-12-12">My Area</h2>
+                </div>
+                <div class="padded-col-sm-12-12 aside-content-login">
+                    {% include "login_system.html" %}
+                </div>
+                <div class="padded-col-sm-12-12 aside-content-personal">
+                    <label><input type="checkbox">Show only my favourites</label>
+                    <label><input type="checkbox">Show only my shares</label>
+                    <button>Place marker</button>
+                </div>
+            </div>
         </div>
-    </div>
-    <div>
-        <p>My area</p>
-    </div>
-    <div>
-        <div>
-            {% include "login_system.html" %}
-        </div>
-        <div>
-            <label><input type="checkbox">Favourites</label>
-            <label><input type="checkbox">My shares</label>
-        </div>
-    </div>
-    <button></button>
-</aside>
+    </aside>
+</div>
 </body>
 </html>

@@ -8,7 +8,9 @@
         <!-- END PRE-REQUISITES FOR GOOGLE SIGN IN -->
 
         <!-- GOOGLE PLUS SIGN IN BUTTON-->
-
+        <div class="custom-btn">
+            <img src="{{ url_for('static', filename='assets/login-google.png') }}">
+        </div>
         <div id="signInButton">
           <span class="g-signin"
                 data-scope="openid email"
@@ -113,7 +115,9 @@
                 });
             }
         </script>
-
+        <div class="custom-btn">
+            <img src="{{ url_for('static', filename='assets/login-facebook.png') }}">
+        </div>
         <div id="fbSignInButton">
             <button>
                 <fb:login-button scope="public_profile,email"

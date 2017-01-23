@@ -1,0 +1,156 @@
+aside {
+    position: absolute;
+    right: 0;
+    width: 320px !important;
+    height: calc(100% - 44px);
+    background-color: rgba(68, 68, 68, 0.9);
+    -webkit-transition: right 0.5s;
+    transition: right 0.5s;
+}
+
+.aside-in {
+    right: 0;
+}
+
+.aside-out {
+    right: -251px;
+}
+
+.aside-switch {
+    position: relative;
+    width: 70px;
+    border-right: 1px solid #95989A;
+}
+
+.aside-switch button {
+    position: absolute;
+    left: 5px;
+    bottom: 8px;
+    width: 53px;
+    height: 53px;
+    border: none;
+    background-color: transparent;
+    overflow: hidden;
+    cursor: pointer;
+    background-image: url(../assets/layout-sprite.png);
+    -webkit-background-size: 244px 61px;
+    background-size: 244px 61px;
+}
+
+.aside-switch .menu-in {
+    background-position: -122.5px -1px;
+}
+
+.aside-switch .menu-out {
+    background-position: -183.5px -1px;
+}
+
+.aside-content {
+    width: 250px;
+}
+
+.aside-content-area {
+    margin-top: 20px;
+}
+
+aside h2 {
+    font-size: 1.2em;
+    color: white;
+    border-bottom: 1px solid white;
+    margin-bottom: 10px;
+}
+
+aside label {
+    display: block;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+aside input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.aside-content-login {
+    display: block;
+}
+
+.provider-login {
+    position: relative;
+    display: block;
+    width: 153px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
+.custom-btn {
+    width: 153px;
+    height: 32px;
+}
+
+.custom-btn img {
+    width: 100%;
+}
+
+
+
+#signInButton,
+#fbSignInButton {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+.aside-content-personal {
+    display: none;
+}
+
+.aside-content-personal button {
+    border: none;
+    width: 100%;
+    height: 44px;
+    margin-top: 10px;
+    font-size: 0.875em;
+    color: #444;
+    background-color: white;
+}
+
+
+
+.aside-content-area:first-child label:first-child {
+    color: greenyellow;
+}
+
+.aside-content-area:first-child label:nth-child(2) {
+    color: #0099ff;
+}
+
+.aside-content-area:first-child label:nth-child(3) {
+    color: #ff9900;
+}
+
+.aside-content-area:first-child label:nth-child(4) {
+    color: #ff00ff;
+}
+
+.aside-content-area:first-child label:nth-child(5) {
+    color: #FFD698;
+}
+
+.aside-content-area:first-child label:last-child {
+    color: #009900;
+}
+
+.aside-content-area:last-child label:first-child {
+    color: #ff0000;
+}
+
+.aside-content-area:last-child label:nth-child(2) {
+    color: cornflowerblue;
+}
+
+@media screen and (min-width: 768px) {
+    aside {
+        height: calc(100% - 58px);
+    }
+}
