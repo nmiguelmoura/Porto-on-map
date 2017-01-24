@@ -15,6 +15,8 @@
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/header.css') }}">
     <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/map.css') }}">
+    <link rel="stylesheet"
           href="{{ url_for('static', filename='css/aside.css') }}">
 </head>
 <body>
@@ -22,12 +24,13 @@
     <header>
         <h1 class="col-sm-12-12">Get to Know Porto</h1>
     </header>
-    <section>
-
+    <section id="map">
+        <p class="map-error">An error occurred and the map can't be shown.<br>Please check your Internet connection and reload the page!</p>
     </section>
-    <aside class="wrapper aside-in">
+    <aside class="wrapper aside-out" data-bind="attr: {class: asideClass}">
         <div class="aside-switch">
-            <button class="menu-in"></button>
+            <button class="menu-in"
+                    data-bind="click: toggleAside, attr: {class: menuButtonClass}"></button>
         </div>
         <div class="aside-content">
             <div class="wrapper-inside aside-content-area">
@@ -51,15 +54,29 @@
                     {% include "login_system.html" %}
                 </div>
                 <div class="padded-col-sm-12-12 aside-content-personal">
-                    <label><input type="checkbox">Show only my favourites</label>
+                    <label><input type="checkbox">Show only my
+                        favourites</label>
                     <label><input type="checkbox">Show only my shares</label>
-                    <button>Place marker</button>
+                    <div class="wrapper-inside">
+                        <button>Place marker</button>
+                        <button>Logout</button>
+                    </div>
                 </div>
             </div>
         </div>
     </aside>
 </div>
+<script>
+    function mapCallback(){
+        nmm.mapView.renderMap();
+    }
+</script>
 <script src="{{ url_for('static', filename='src/libs/jquery.js') }}"></script>
 <script src="{{ url_for('static', filename='src/libs/knockout.js') }}"></script>
+<script src="{{ url_for('static', filename='src/MapView.js') }}"></script>
+<script src="{{ url_for('static', filename='src/Model.js') }}"></script>
+<script src="{{ url_for('static', filename='src/ViewModel.js') }}"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2qVniG_TU58tYkUfM04i0Stxl9B_FzSQ&callback=mapCallback">
+</script>
 </body>
 </html>
