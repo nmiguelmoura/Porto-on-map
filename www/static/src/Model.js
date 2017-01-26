@@ -9,7 +9,14 @@ nmm.Model = (function(){
 
     function Model () {
         this.params = {
-
+            /*categories: [
+                'Monuments',
+                'Museums',
+                'Hotels',
+                'Restaurants',
+                'Coffee shops',
+                'Others'
+            ]*/
         }
     }
 

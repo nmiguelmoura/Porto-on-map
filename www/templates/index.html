@@ -33,20 +33,25 @@
                     data-bind="click: toggleAside, attr: {class: menuButtonClass}"></button>
         </div>
         <div class="aside-content">
-            <div class="wrapper-inside aside-content-area">
+            <div class="wrapper-inside aside-content-area" data-bind="if: asideContentOn() === 'locals'">
                 <div class="padded-col-sm-12-12">
-                    <h2 class="col-sm-12-12">Locals</h2>
+                    <h2 class="col-sm-12-12">What to see?</h2>
                 </div>
                 <div class="padded-col-sm-12-12">
-                    <label><input type="checkbox">Monuments</label>
-                    <label><input type="checkbox">Museums</label>
-                    <label><input type="checkbox">Hotels</label>
-                    <label><input type="checkbox">Restaurants</label>
-                    <label><input type="checkbox">Coffee Shops</label>
-                    <label><input type="checkbox">Others</label>
+                    <label><input type="checkbox" data-bind="checked: checks.monuments">Monuments</label>
+                    <label><input type="checkbox" data-bind="checked: checks.museums">Museums</label>
+                    <label><input type="checkbox" data-bind="checked: checks.hotels">Hotels</label>
+                    <label><input type="checkbox" data-bind="checked: checks.restaurants">Restaurants</label>
+                    <label><input type="checkbox" data-bind="checked: checks.coffee">Coffee Shops</label>
+                    <label><input type="checkbox" data-bind="checked: checks.others">Others</label>
                 </div>
             </div>
-            <div class="wrapper-inside aside-content-area">
+            <div class="wrapper-inside aside-content-area" data-bind="if: asideContentOn() === 'list'">
+                <div class="padded-col-sm-12-12">
+                    <h2 class="col-sm-12-12">List of locals</h2>
+                </div>
+            </div>
+            <div class="wrapper-inside aside-content-area" data-bind="if: asideContentOn() === 'login'">
                 <div class="padded-col-sm-12-12">
                     <h2 class="col-sm-12-12">My Area</h2>
                 </div>
@@ -62,6 +67,17 @@
                         <button>Logout</button>
                     </div>
                 </div>
+            </div>
+            <div class="wrapper-inside aside-content-area" data-bind="if: asideContentOn() === 'weather'">
+                <div class="padded-col-sm-12-12">
+                    <h2 class="col-sm-12-12">Weather</h2>
+                </div>
+            </div>
+            <div class="col-sm-12-12 aside-content-bottom-buttons">
+                <button class="menu-check" data-key="0" data-bind="click: toggleContent"></button>
+                <button class="menu-list" data-key="1" data-bind="click: toggleContent"></button>
+                <button class="menu-login" data-key="2" data-bind="click: toggleContent"></button>
+                <button class="menu-login" data-key="3" data-bind="click: toggleContent"></button>
             </div>
         </div>
     </aside>
