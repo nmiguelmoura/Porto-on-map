@@ -34,7 +34,7 @@ aside {
     cursor: pointer;
     background-image: url(../assets/layout-sprite.png);
     -webkit-background-size: 244px 61px;
-    background-size: 244px 61px;
+    background-size: 425px 61px;
 }
 
 .aside-switch .menu-in {
