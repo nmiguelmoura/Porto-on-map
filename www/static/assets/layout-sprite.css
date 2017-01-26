@@ -1,7 +1,7 @@
 /* ----------------------------------------------------
    created with http://www.codeandweb.com/texturepacker 
    ----------------------------------------------------
-   $TexturePacker:SmartUpdate:8974f282361e73397d58787649062dfd:090c7a14beadfc85840fd76881c71383:9b1a95796ba8309fd95b02715ec0140e$
+   $TexturePacker:SmartUpdate:89f8f9c6297f3695574f165187feb0ed:b649a5737c8a6fd9a6080bc8ca453bf2:9b1a95796ba8309fd95b02715ec0140e$
    ----------------------------------------------------
 
    usage: <span class="{-spritename-} sprite"></span>
@@ -19,3 +19,4 @@
 .menu-list {width:119px; height:119px; background-position: -610px -1px}
 .menu-login {width:119px; height:119px; background-position: -731px -1px}
 .menu-out {width:120px; height:120px; background-position: -367px -1px}
+.menu-weather {width:119px; height:119px; background-position: -852px -1px}
