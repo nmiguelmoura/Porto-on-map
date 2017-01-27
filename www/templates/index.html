@@ -25,7 +25,10 @@
         <h1 class="col-sm-12-12">Get to Know Porto</h1>
     </header>
     <section id="map">
-        <p class="map-error">An error occurred and the map can't be shown.<br>Please check your Internet connection and reload the page!</p>
+
+    </section>
+    <section class="message-box" data-bind="visible: messageToUser">
+        <p class="message-box-p" data-bind="text: messageToUser"></p>
     </section>
     <aside class="wrapper aside-out" data-bind="attr: {class: asideClass}">
         <div class="aside-switch">

@@ -7,10 +7,11 @@ var nmm = nmm || {};
 nmm.MapView = (function () {
     'use strict';
 
-    function MapView() {
+    function MapView(controller) {
+        this._controller = controller;
         this._t1 = setTimeout(function(){
-            document.getElementsByClassName('map-error')[0].style.display = 'block';
-        }, 10000);
+            this._controller.mapLoadingFailed();
+        }.bind(this), 1000);
     }
 
     var p = MapView.prototype;
@@ -22,6 +23,7 @@ nmm.MapView = (function () {
             center: porto
         });
         clearTimeout(this._t1);
+        this._controller.mapReady();
     };
 
     return MapView;
