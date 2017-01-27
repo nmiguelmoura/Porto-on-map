@@ -16,6 +16,14 @@ body {
     /*min-height: 100%;*/
     position: relative;
 }
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
 /*
 .page-content {
     padding-bottom: 110px;

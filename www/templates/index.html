@@ -54,7 +54,7 @@
                     <h2 class="col-sm-12-12">List of locals</h2>
                 </div>
             </div>
-            <div class="wrapper-inside aside-content-area" data-bind="if: asideContentOn() === 'login'">
+            <div class="wrapper-inside aside-content-area" data-bind="css: {hide: asideContentOn() !== 'login', show: asideContentOn() === 'login'}">
                 <div class="padded-col-sm-12-12">
                     <h2 class="col-sm-12-12">My Area</h2>
                 </div>
