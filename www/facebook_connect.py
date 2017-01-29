@@ -1,7 +1,7 @@
 import json
 
 import httplib2
-from flask import request, make_response, flash
+from flask import request, make_response, jsonify
 from flask import session as login_session
 
 import prefabs.login_output
@@ -73,5 +73,6 @@ class Facebook_connect():
             user_id = self.db.create_user(login_session)
         login_session['user_id'] = user_id
 
-        flash("Now logged in as %s" % login_session['username'])
-        return self.output.get_output()
+        # return self.output.get_output()
+        return jsonify({'html': self.output.get_output(),
+                        'user_id': login_session['user_id']})

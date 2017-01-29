@@ -2,7 +2,7 @@ import json
 
 import httplib2
 import requests
-from flask import request, flash, make_response
+from flask import request, flash, make_response, jsonify
 from flask import session as login_session
 from oauth2client.client import AccessTokenCredentials
 from oauth2client.client import FlowExchangeError
@@ -105,4 +105,6 @@ class Google_connect():
         login_session['user_id'] = self.db.create_user(login_session)
 
         flash("You are now logged in as %s" % login_session['username'])
-        return self.output.get_output()
+        # return self.output.get_output()
+        return jsonify({'html': self.output.get_output(),
+                        'user_id': login_session['user_id']})
