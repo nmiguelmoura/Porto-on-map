@@ -26,5 +26,15 @@ nmm.MapView = (function () {
         this._controller.mapReady();
     };
 
+    p.addNewMarker = function (marker) {
+        console.log(marker);
+    };
+
+    p.launchMarkers = function (markers) {
+        markers.forEach(function (marker) {
+            this.addNewMarker(marker);
+        }, this);
+    };
+
     return MapView;
 })();

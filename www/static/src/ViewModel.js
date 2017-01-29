@@ -36,7 +36,7 @@ nmm.ViewModel = (function () {
 
     p.markersLoaded = function () {
         this.messageToUser('');
-        this.markers = ko.observableArray(this._model.markers);
+        this._mapView.launchMarkers(this._model.markers);
     };
 
     p.mapReady = function () {

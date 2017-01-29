@@ -33,7 +33,7 @@ nmm.Model = (function(){
         .done(function(result){
             var data = result.Marker;
             self.markers = data;
-            self._controller.markersLoaded()
+            self._controller.markersLoaded();
         })
         .fail(function(error){
             self.markers = [];
