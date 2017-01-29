@@ -76,7 +76,10 @@ class Google_connect():
         stored_gplus_id = login_session.get('gplus_id')
         if stored_credentials is not None and gplus_id == stored_gplus_id:
             response = make_response(
-                json.dumps('Current user is already connected.'),
+                json.dumps({
+                    'html': self.output.get_output(),
+                    'user_id': login_session['user_id']
+                }),
                 200)
             response.headers['Content-Type'] = 'application/json'
             return response
