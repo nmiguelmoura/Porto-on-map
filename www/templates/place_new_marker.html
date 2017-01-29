@@ -1,0 +1,25 @@
+<div class="fade-area"></div>
+<div class="add-marker-content-area-out" data-bind="attr: {class: addMarkerModal.modalClass}">
+    <h3>Place a new marker</h3>
+    <form>
+        <p class="form-descriptor">Title</p>
+        <input class="col-sm-12-12" type="text" name="title" placeholder="Type local title...">
+        <p class="form-descriptor">Coordinates</p>
+        <p class="text-small">Latitude: 87678 — Longitude: 7890</p>
+        <p class="form-descriptor">Local type</p>
+        <select class="col-sm-12-12" name="type">
+            <option value="monument">Monument</option>
+            <option value="museum">Museum</option>
+            <option value="hotel">Hotel</option>
+            <option value="restaurant">Restaurant</option>
+            <option value="coffee">Coffee Shop</option>
+            <option value="other">Other</option>
+        </select>
+        <p class="form-descriptor">Description</p>
+        <textarea class="col-sm-12-12" name="description" placeholder="Describe the local..."></textarea>
+        <div class="col-sm-12-12 buttons">
+            <button>Cancel</button>
+            <button>Submit</button>
+        </div>
+    </form>
+</div>

@@ -8,9 +8,9 @@ nmm.ViewModel = (function () {
     'use strict';
 
     function ViewModel() {
+        this._model = new nmm.Model(this);
         this._mapView = new nmm.MapView(this);
         nmm.mapView = this._mapView;
-        this._model = new nmm.Model(this);
         this.menuButtonClass = ko.observable('menu-in');
         this.asideClass = ko.observable('wrapper aside-out');
         this.asideContentOn = ko.observable('locals');
@@ -26,9 +26,35 @@ nmm.ViewModel = (function () {
         };
 
         this.markers = ko.observableArray([]);
+
+        this.addMarkerModal = {
+            modalOn: ko.observable(false),
+            modalClass: ko.observable('add-marker-content-area-out')
+        };
+
+        /*setTimeout(function(){
+            this.addMarkerModal.modalOn(true);
+        }.bind(this), 2000);
+
+        setTimeout(function(){
+            this.addMarkerModal.modalClass('add-marker-content-area-in');
+        }.bind(this), 2100);*/
     }
 
     var p = ViewModel.prototype;
+
+    p.markerClicked = function (marker) {
+        if(this._model.params.currentMarker !== null) {
+            this._mapView.toggleMarkerAnimation(this._model.params.currentMarker);
+        }
+
+        this._model.params.currentMarker = marker;
+        this._mapView.toggleMarkerAnimation(marker);
+    };
+
+    p.getMarkerIcons = function () {
+        return this._model.params.marker_icons;
+    };
 
     p.markersLoadingFailed = function () {
         this.messageToUser("An error occurred and the markers can't be shown. Please check your Internet connection and reload the page!");
