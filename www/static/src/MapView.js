@@ -74,9 +74,7 @@ nmm.MapView = (function () {
 
         var self = this;
         google.maps.event.addListener(this.map, 'click', function (event) {
-            console.log('lat: ' + event.latLng.lat());
-            console.log('long: ' + event.latLng.lng());
-            self.addNewMarker(event.latLng);
+            self._controller.mapClicked(event.latLng.lat(), event.latLng.lng());
         });
     };
 

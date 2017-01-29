@@ -29,22 +29,58 @@ nmm.ViewModel = (function () {
 
         this.addMarkerModal = {
             modalOn: ko.observable(false),
-            modalClass: ko.observable('add-marker-content-area-out')
+            modalClass: ko.observable('add-marker-content-area-out'),
+            modalTitle: ko.observable(''),
+            modalCoordinates: ko.observable(''),
+            modalType: ko.observable('other'),
+            modalDescription: ko.observable(''),
+            warning: ko.observable('')
         };
-
-        /*setTimeout(function(){
-            this.addMarkerModal.modalOn(true);
-        }.bind(this), 2000);
-
-        setTimeout(function(){
-            this.addMarkerModal.modalClass('add-marker-content-area-in');
-        }.bind(this), 2100);*/
     }
 
     var p = ViewModel.prototype;
 
+    p.newMarkerSubmitted = function () {
+        if (this.addMarkerModal.modalTitle() === '' || this.addMarkerModal.modalDescription() === '') {
+            this.addMarkerModal.warning('Please insert all the information requested.');
+        } else {
+            this.addMarkerModal.warning('');
+
+            //store in db
+
+
+            this.resetAddMarkerModal();
+        }
+    };
+
+    p.showAddMarkerModal = function (latitude, longitude) {
+        this.addMarkerModal.modalOn(true);
+        this.addMarkerModal.modalCoordinates('Lat: ' + latitude + ' — Lng: ' + longitude);
+
+        var self = this;
+        setTimeout(function(){
+            self.addMarkerModal.modalClass('add-marker-content-area-in');
+        }, 100);
+    };
+
+    p.resetAddMarkerModal = function () {
+        this.addMarkerModal.modalOn(false);
+        this.addMarkerModal.modalClass('add-marker-content-area-out');
+        this.addMarkerModal.modalTitle('');
+        this.addMarkerModal.modalCoordinates('');
+        this.addMarkerModal.modalType('other');
+        this.addMarkerModal.modalDescription('');
+        this.addMarkerModal.warning('');
+    };
+
+    p.mapClicked = function (latitude, longitude) {
+        if(nmm.user_id) {
+            this.showAddMarkerModal(latitude, longitude);
+        }
+    };
+
     p.markerClicked = function (marker) {
-        if(this._model.params.currentMarker !== null) {
+        if (this._model.params.currentMarker !== null) {
             this._mapView.toggleMarkerAnimation(this._model.params.currentMarker);
         }
 
@@ -78,13 +114,13 @@ nmm.ViewModel = (function () {
     p.toggleContent = function (model, event) {
         var btnClicked = event.target.getAttribute('data-key');
 
-        if(btnClicked === '0') {
+        if (btnClicked === '0') {
             this.asideContentOn('locals');
-        } else if(btnClicked === '1') {
+        } else if (btnClicked === '1') {
             this.asideContentOn('list');
-        } else if(btnClicked === '2') {
+        } else if (btnClicked === '2') {
             this.asideContentOn('login');
-        } else if(btnClicked === '3') {
+        } else if (btnClicked === '3') {
             this.asideContentOn('weather');
         }
     };

@@ -1,13 +1,13 @@
 <div class="fade-area"></div>
 <div class="add-marker-content-area-out" data-bind="attr: {class: addMarkerModal.modalClass}">
     <h3>Place a new marker</h3>
-    <form>
+    <form data-bind="submit: newMarkerSubmitted">
         <p class="form-descriptor">Title</p>
-        <input class="col-sm-12-12" type="text" name="title" placeholder="Type local title...">
+        <input class="col-sm-12-12" type="text" name="title" placeholder="Type local title..." data-bind="value: addMarkerModal.modalTitle">
         <p class="form-descriptor">Coordinates</p>
-        <p class="text-small">Latitude: 87678 — Longitude: 7890</p>
+        <p class="text-small" data-bind="text: addMarkerModal.modalCoordinates"></p>
         <p class="form-descriptor">Local type</p>
-        <select class="col-sm-12-12" name="type">
+        <select class="col-sm-12-12" name="type" data-bind="value: addMarkerModal.modalType">
             <option value="monument">Monument</option>
             <option value="museum">Museum</option>
             <option value="hotel">Hotel</option>
@@ -16,10 +16,11 @@
             <option value="other">Other</option>
         </select>
         <p class="form-descriptor">Description</p>
-        <textarea class="col-sm-12-12" name="description" placeholder="Describe the local..."></textarea>
+        <textarea class="col-sm-12-12" name="description" placeholder="Describe the local..." data-bind="value: addMarkerModal.modalDescription"></textarea>
+        <p class="warning" data-bind="text: addMarkerModal.warning"></p>
         <div class="col-sm-12-12 buttons">
-            <button>Cancel</button>
-            <button>Submit</button>
+            <button data-bind="click: resetAddMarkerModal">Cancel</button>
+            <button type="submit">Submit</button>
         </div>
     </form>
 </div>
