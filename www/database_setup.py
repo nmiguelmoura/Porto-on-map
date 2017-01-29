@@ -30,11 +30,13 @@ class Marker(Base):
     @property
     def serialize(self):
         return {
+            "id": self.id,
             "title": self.title,
             "latitude": self.latitude,
             "longitude": self.longitude,
             "description": self.description,
-            "user_id": self.user.name
+            "user_id": self.user.name,
+            "type": self.type
         }
 
 class Favourite(Base):
