@@ -82,18 +82,23 @@ nmm.ViewModel = (function () {
         } else {
             this.addMarkerModal.warning('');
 
+            var self = this;
             //store in db
             $.post("/add",
                 {
-                    title: this.addMarkerModal.modalTitle(),
-                    latitude: this.addMarkerModal.modalLatitude(),
-                    longitude: this.addMarkerModal.modalLongitude(),
-                    type: this.addMarkerModal.modalType(),
-                    description: this.addMarkerModal.modalDescription()
+                    title: self.addMarkerModal.modalTitle(),
+                    latitude: self.addMarkerModal.modalLatitude(),
+                    longitude: self.addMarkerModal.modalLongitude(),
+                    type: self.addMarkerModal.modalType(),
+                    description: self.addMarkerModal.modalDescription()
                 },
                 function (data, status) {
-                    if(status === 'success') {
-                        console.log(data.Marker);
+                    if (status === 'success') {
+                        self._model.markers.push(data.Marker);
+                        self._mapView.addNewMarker(data.Marker);
+                    } else {
+                        alert('Something went wrong while saving your marker.' +
+                            ' Please reload the page and try again.')
                     }
                 });
 
