@@ -7,14 +7,44 @@ var nmm = nmm || {};
 nmm.ViewModel = (function () {
     'use strict';
 
+    var LOADING_MARKERS_FAILED = -2,
+        LOADING_MAP_FAILED = -1,
+        LOADING_MAP = 0,
+        LOADING_MARKERS = 1,
+        FINISHED_LOADING = 2;
+
     function ViewModel() {
+        this._appState = ko.observable(LOADING_MAP);
         this._model = new nmm.Model(this);
         this._mapView = new nmm.MapView(this);
         nmm.mapView = this._mapView;
         this.menuButtonClass = ko.observable('menu-in');
         this.asideClass = ko.observable('wrapper aside-out');
         this.asideContentOn = ko.observable('locals');
-        this.messageToUser = ko.observable('Loading map...');
+        this._user_id = ko.observable();
+
+        this.messageToUser = ko.computed(function () {
+            switch (this._appState()) {
+                case LOADING_MAP:
+                    return 'Loading map';
+
+                case LOADING_MARKERS:
+                    return 'Loading markers';
+
+                case FINISHED_LOADING:
+                    if (this._user_id()) {
+                        return 'Click on map to place marker';
+                    } else {
+                        return 'Login to place new markers';
+                    }
+
+                case LOADING_MAP_FAILED:
+                    return "An error occurred and the map can't be shown. Please check your Internet connection and reload the page!";
+
+                case LOADING_MARKERS_FAILED:
+                    return "An error occurred and the markers can't be shown. Please check your Internet connection and reload the page!";
+            }
+        }, this);
 
         this.checks = {
             monuments: ko.observable(true),
@@ -40,6 +70,10 @@ nmm.ViewModel = (function () {
 
     var p = ViewModel.prototype;
 
+    p.userIdUpdate = function (user_id) {
+        this._user_id(user_id);
+    };
+
     p.newMarkerSubmitted = function () {
         if (this.addMarkerModal.modalTitle() === '' || this.addMarkerModal.modalDescription() === '') {
             this.addMarkerModal.warning('Please insert all the information requested.');
@@ -58,7 +92,7 @@ nmm.ViewModel = (function () {
         this.addMarkerModal.modalCoordinates('Lat: ' + latitude + ' — Lng: ' + longitude);
 
         var self = this;
-        setTimeout(function(){
+        setTimeout(function () {
             self.addMarkerModal.modalClass('add-marker-content-area-in');
         }, 100);
     };
@@ -74,7 +108,7 @@ nmm.ViewModel = (function () {
     };
 
     p.mapClicked = function (latitude, longitude) {
-        if(nmm.user_id) {
+        if (this._user_id()) {
             this.showAddMarkerModal(latitude, longitude);
         }
     };
@@ -93,22 +127,21 @@ nmm.ViewModel = (function () {
     };
 
     p.markersLoadingFailed = function () {
-        this.messageToUser("An error occurred and the markers can't be shown. Please check your Internet connection and reload the page!");
+        this._appState(LOADING_MARKERS_FAILED);
     };
 
     p.markersLoaded = function () {
-        this.messageToUser('');
+        this._appState(FINISHED_LOADING);
         this._mapView.launchMarkers(this._model.markers);
     };
 
     p.mapReady = function () {
-        this.messageToUser('Loading places...');
+        this._appState(LOADING_MARKERS);
         this._model.getLocalsListFromDB();
     };
 
     p.mapLoadingFailed = function () {
-        this.messageToUser("An error occurred and the map can't be shown. Please check your Internet connection and reload the page!");
-        console.log('lo');
+        this._appState(LOADING_MAP_FAILED);
     };
 
     p.toggleContent = function (model, event) {
@@ -133,4 +166,5 @@ nmm.ViewModel = (function () {
     return ViewModel;
 })();
 
-ko.applyBindings(new nmm.ViewModel);
+nmm.vm = new nmm.ViewModel();
+ko.applyBindings(nmm.vm);

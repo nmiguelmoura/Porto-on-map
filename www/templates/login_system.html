@@ -37,6 +37,7 @@
                         contentType: 'application/octet-stream; charset=utf-8',
                         success: function (result) {
                             //store id from user
+                            nmm.vm.userIdUpdate(result.user_id);
                             nmm.user_id = result.user_id;
                             if (result) {
                                 $('#result').html(result.html);
@@ -97,6 +98,7 @@
                         contentType: 'application/octet-stream; charset=utf-8',
                         success: function (result) {
                             //store id from user
+                            nmm.vm.userIdUpdate(result.user_id);
                             nmm.user_id = result.user_id;
                             // Handle or verify the server response if necessary.
                             if (result) {
