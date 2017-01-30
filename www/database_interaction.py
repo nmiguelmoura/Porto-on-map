@@ -22,6 +22,19 @@ class Database_interaction:
         return self.session.query(Marker) \
             .all()
 
+    def add_marker(self, title, type, latitude, longitude, description, user_id):
+        new_marker = Marker(
+            title=title,
+            type=type,
+            latitude=latitude,
+            longitude=longitude,
+            description=description,
+            user_id=user_id
+        )
+        self.session.add(new_marker)
+        self.session.commit()
+        return new_marker
+
     def query_user_favourites(self, user_id):
         return self.session.query(Favourite) \
             .filter_by(user_id=user_id) \

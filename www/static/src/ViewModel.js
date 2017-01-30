@@ -62,6 +62,8 @@ nmm.ViewModel = (function () {
             modalClass: ko.observable('add-marker-content-area-out'),
             modalTitle: ko.observable(''),
             modalCoordinates: ko.observable(''),
+            modalLatitude: ko.observable(''),
+            modalLongitude: ko.observable(''),
             modalType: ko.observable('other'),
             modalDescription: ko.observable(''),
             warning: ko.observable('')
@@ -81,7 +83,19 @@ nmm.ViewModel = (function () {
             this.addMarkerModal.warning('');
 
             //store in db
-
+            $.post("/add",
+                {
+                    title: this.addMarkerModal.modalTitle(),
+                    latitude: this.addMarkerModal.modalLatitude(),
+                    longitude: this.addMarkerModal.modalLongitude(),
+                    type: this.addMarkerModal.modalType(),
+                    description: this.addMarkerModal.modalDescription()
+                },
+                function (data, status) {
+                    if(status === 'success') {
+                        console.log(data.Marker);
+                    }
+                });
 
             this.resetAddMarkerModal();
         }
@@ -89,6 +103,8 @@ nmm.ViewModel = (function () {
 
     p.showAddMarkerModal = function (latitude, longitude) {
         this.addMarkerModal.modalOn(true);
+        this.addMarkerModal.modalLatitude(latitude);
+        this.addMarkerModal.modalLongitude(longitude);
         this.addMarkerModal.modalCoordinates('Lat: ' + latitude + ' — Lng: ' + longitude);
 
         var self = this;
@@ -105,6 +121,8 @@ nmm.ViewModel = (function () {
         this.addMarkerModal.modalType('other');
         this.addMarkerModal.modalDescription('');
         this.addMarkerModal.warning('');
+        this.addMarkerModal.modalLatitude('');
+        this.addMarkerModal.modalLongitude('');
     };
 
     p.mapClicked = function (latitude, longitude) {
