@@ -47,13 +47,24 @@ nmm.ViewModel = (function () {
         }, this);
 
         this.checks = {
-            monuments: ko.observable(true),
-            museums: ko.observable(true),
-            hotels: ko.observable(true),
-            restaurants: ko.observable(true),
+            monument: ko.observable(true),
+            museum: ko.observable(true),
+            hotel: ko.observable(true),
+            restaurant: ko.observable(true),
             coffee: ko.observable(true),
-            others: ko.observable(true)
+            other: ko.observable(true)
         };
+
+        this.test = ko.computed(function () {
+            this._mapView.displayMarkers({
+                monument: this.checks.monument(),
+                museum: this.checks.museum(),
+                hotel: this.checks.hotel(),
+                restaurant: this.checks.restaurant(),
+                coffee: this.checks.coffee(),
+                other: this.checks.other()
+            });
+        }, this);
 
         this.markers = ko.observableArray([]);
 

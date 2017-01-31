@@ -34,6 +34,14 @@ nmm.MapView = (function () {
         this._controller.markerClicked(marker);
     };
 
+    p.displayMarkers = function (markersToShow) {
+        if(this._markers.length > 0) {
+            this._markers.forEach(function (mk) {
+                mk.setVisible(markersToShow[mk.type]);
+            }, this);
+        }
+    };
+
     p.addNewMarker = function (mk) {
         var lat = parseFloat(mk.latitude),
             lng = parseFloat(mk.longitude);
@@ -45,6 +53,7 @@ nmm.MapView = (function () {
             },
             map: this.map,
             key: mk.id,
+            type: mk.type,
             title: mk.title,
             icon: this._icons[mk.type]
         });
