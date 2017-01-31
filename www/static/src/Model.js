@@ -24,6 +24,22 @@ nmm.Model = (function () {
 
     var p = Model.prototype;
 
+    p.storeNewMarker = function (markerData) {
+        //store in db
+        var self = this;
+        $.post("/add", markerData,
+            function (data, status) {
+                if (status === 'success') {
+                    self.markers.push(data.Marker);
+                    console.log(data.Marker);
+                    self._controller.updateExistingMarkers(data.Marker);
+                } else {
+                    alert('Something went wrong while saving your marker.' +
+                        ' Please reload the page and try again.')
+                }
+            });
+    };
+
     p.getLocalsListFromDB = function () {
         var self = this,
             url = '/markers/JSON/';

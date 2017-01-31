@@ -72,8 +72,8 @@ nmm.ViewModel = (function () {
 
     var p = ViewModel.prototype;
 
-    p.userIdUpdate = function (user_id) {
-        this._user_id(user_id);
+    p.updateExistingMarkers = function (marker) {
+        this._mapView.addNewMarker(marker);
     };
 
     p.newMarkerSubmitted = function () {
@@ -82,25 +82,13 @@ nmm.ViewModel = (function () {
         } else {
             this.addMarkerModal.warning('');
 
-            var self = this;
-            //store in db
-            $.post("/add",
-                {
-                    title: self.addMarkerModal.modalTitle(),
-                    latitude: self.addMarkerModal.modalLatitude(),
-                    longitude: self.addMarkerModal.modalLongitude(),
-                    type: self.addMarkerModal.modalType(),
-                    description: self.addMarkerModal.modalDescription()
-                },
-                function (data, status) {
-                    if (status === 'success') {
-                        self._model.markers.push(data.Marker);
-                        self._mapView.addNewMarker(data.Marker);
-                    } else {
-                        alert('Something went wrong while saving your marker.' +
-                            ' Please reload the page and try again.')
-                    }
-                });
+            var storedMarker = this._model.storeNewMarker({
+                title: this.addMarkerModal.modalTitle(),
+                latitude: this.addMarkerModal.modalLatitude(),
+                longitude: this.addMarkerModal.modalLongitude(),
+                type: this.addMarkerModal.modalType(),
+                description: this.addMarkerModal.modalDescription()
+            });
 
             this.resetAddMarkerModal();
         }
@@ -128,6 +116,10 @@ nmm.ViewModel = (function () {
         this.addMarkerModal.warning('');
         this.addMarkerModal.modalLatitude('');
         this.addMarkerModal.modalLongitude('');
+    };
+
+    p.userIdUpdate = function (user_id) {
+        this._user_id(user_id);
     };
 
     p.mapClicked = function (latitude, longitude) {
