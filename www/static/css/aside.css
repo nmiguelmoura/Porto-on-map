@@ -69,6 +69,24 @@ aside input[type="checkbox"] {
     margin-right: 10px;
 }
 
+aside .list {
+    position: absolute;
+    height: calc(100% - 73px);
+    overflow: hidden;
+}
+
+aside .list-of-locals {
+    overflow: scroll;
+    height: calc(100% - 40px);
+}
+
+aside .list-of-locals p {
+    color: white;
+    cursor: pointer;
+    font-size: 0.9em;
+    line-height: 1.5em;
+}
+
 .aside-content-login {
     display: block;
 }

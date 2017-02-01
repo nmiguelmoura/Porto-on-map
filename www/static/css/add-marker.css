@@ -75,7 +75,7 @@ form .warning {
 }
 
 .buttons button {
-    background-color: red;
+    cursor: pointer;
     border: none;
     padding: 0;
     margin: 0;

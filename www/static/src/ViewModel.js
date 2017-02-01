@@ -11,9 +11,10 @@ nmm.ViewModel = (function () {
         LOADING_MAP_FAILED = -1,
         LOADING_MAP = 0,
         LOADING_MARKERS = 1,
-        FINISHED_LOADING = 2;
+        FINISHED_LOADING = 2, self;
 
     function ViewModel() {
+        self = this;
         this._appState = ko.observable(LOADING_MAP);
         this._model = new nmm.Model(this);
         this._mapView = new nmm.MapView(this);
@@ -55,19 +56,6 @@ nmm.ViewModel = (function () {
             other: ko.observable(true)
         };
 
-        this.test = ko.computed(function () {
-            this._mapView.displayMarkers({
-                monument: this.checks.monument(),
-                museum: this.checks.museum(),
-                hotel: this.checks.hotel(),
-                restaurant: this.checks.restaurant(),
-                coffee: this.checks.coffee(),
-                other: this.checks.other()
-            });
-        }, this);
-
-        this.markers = ko.observableArray([]);
-
         this.addMarkerModal = {
             modalOn: ko.observable(false),
             modalClass: ko.observable('add-marker-content-area-out'),
@@ -82,6 +70,13 @@ nmm.ViewModel = (function () {
     }
 
     var p = ViewModel.prototype;
+
+    p.listClicked = function (object, event) {
+        var marker = self._mapView.getMarker(object);
+        if(marker) {
+            self.markerClicked(marker);
+        }
+    };
 
     p.updateExistingMarkers = function (marker) {
         this._mapView.addNewMarker(marker);
@@ -111,7 +106,6 @@ nmm.ViewModel = (function () {
         this.addMarkerModal.modalLongitude(longitude);
         this.addMarkerModal.modalCoordinates('Lat: ' + latitude + ' — Lng: ' + longitude);
 
-        var self = this;
         setTimeout(function () {
             self.addMarkerModal.modalClass('add-marker-content-area-in');
         }, 100);
@@ -146,6 +140,10 @@ nmm.ViewModel = (function () {
 
         this._model.params.currentMarker = marker;
         this._mapView.toggleMarkerAnimation(marker);
+
+        if(this.menuButtonClass() === 'menu-out') {
+            this.toggleAside();
+        }
     };
 
     p.getMarkerIcons = function () {
@@ -159,6 +157,27 @@ nmm.ViewModel = (function () {
     p.markersLoaded = function () {
         this._appState(FINISHED_LOADING);
         this._mapView.launchMarkers(this._model.markers);
+
+        this.displayedMarkers = ko.computed(function () {
+            this._mapView.displayMarkers({
+                monument: this.checks.monument(),
+                museum: this.checks.museum(),
+                hotel: this.checks.hotel(),
+                restaurant: this.checks.restaurant(),
+                coffee: this.checks.coffee(),
+                other: this.checks.other()
+            });
+
+            var list = [];
+
+            this._model.markers.forEach(function (mk) {
+                if (this.checks[mk.type]()) {
+                    list.push(mk);
+                }
+            }, this);
+
+            return list;
+        }, this);
     };
 
     p.mapReady = function () {

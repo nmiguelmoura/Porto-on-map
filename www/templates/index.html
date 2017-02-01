@@ -51,9 +51,12 @@
                     <label><input type="checkbox" data-bind="checked: checks.other">Others</label>
                 </div>
             </div>
-            <div class="wrapper-inside aside-content-area" data-bind="if: asideContentOn() === 'list'">
+            <div class="wrapper-inside aside-content-area list" data-bind="if: asideContentOn() === 'list'">
                 <div class="padded-col-sm-12-12">
                     <h2 class="col-sm-12-12">List of locals</h2>
+                    <div class="col-sm-12-12 list-of-locals" data-bind="foreach: displayedMarkers">
+                        <p data-bind="text: title, click: $parent.listClicked"></p>
+                    </div>
                 </div>
             </div>
             <div class="wrapper-inside aside-content-area" data-bind="css: {hide: asideContentOn() !== 'login', show: asideContentOn() === 'login'}">

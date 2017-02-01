@@ -22,6 +22,17 @@ nmm.MapView = (function () {
 
     var p = MapView.prototype;
 
+    p.getMarker = function (data) {
+        var marker;
+        this._markers.forEach(function (mk) {
+            if(mk.key === data.id) {
+                marker = mk;
+            }
+        });
+
+        return marker;
+    };
+
     p.toggleMarkerAnimation = function (marker) {
         if (!marker.getAnimation()) {
             marker.setAnimation(google.maps.Animation.BOUNCE);
