@@ -67,6 +67,17 @@ nmm.ViewModel = (function () {
             modalDescription: ko.observable(''),
             warning: ko.observable('')
         };
+
+        this.descriptionModal = {
+            modalOn: ko.observable(false),
+            modalClass: ko.observable('description-content-area-out'),
+            modalTitle: ko.observable(''),
+            modalType: ko.observable(''),
+            modalCoordinates: ko.observable(),
+            modalDescription: ko.observable(''),
+            modalImageSrc: ko.observable(''),
+            modalFav: ko.observable('')
+        };
     }
 
     var p = ViewModel.prototype;
@@ -98,6 +109,36 @@ nmm.ViewModel = (function () {
 
             this.resetAddMarkerModal();
         }
+    };
+
+    p.showDescriptionModal = function () {
+        var marker = this._model.params.currentMarker;
+        console.log(marker);
+        this.descriptionModal.modalOn(true);
+        this.descriptionModal.modalTitle(marker.title);
+        this.descriptionModal.modalType(marker.type);
+        this.descriptionModal.modalCoordinates('Lat: ' + marker.position.lat() + ' — Lng: ' + marker.position.lng());
+        this.descriptionModal.modalDescription(marker.description);
+
+        //this.addMarkerModal.modalCoordinates('Lat: ' + latitude + ' — Lng: ' + longitude);
+
+        setTimeout(function () {
+            self.descriptionModal.modalClass('description-content-area-in');
+        }, 100);
+    };
+
+    p.resetDescriptionModal = function () {
+        this.descriptionModal.modalOn(false);
+        this.descriptionModal.modalClass('description-content-area-out');
+        this.descriptionModal.modalTitle('');
+        this.descriptionModal.modalType('other');
+        this.descriptionModal.modalCoordinates('');
+        this.descriptionModal.modalDescription('');
+        this.descriptionModal.modalImageSrc('');
+        this.descriptionModal.modalFav('');
+
+        this._mapView.toggleMarkerAnimation(this._model.params.currentMarker);
+        this._model.params.currentMarker = null;
     };
 
     p.showAddMarkerModal = function (latitude, longitude) {
@@ -143,6 +184,12 @@ nmm.ViewModel = (function () {
 
         if(this.menuButtonClass() === 'menu-out') {
             this.toggleAside();
+        }
+
+        if(this.descriptionModal.modalOn()) {
+            this.resetDescriptionModal()
+        } else {
+            this.showDescriptionModal(marker);
         }
     };
 

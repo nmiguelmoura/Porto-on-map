@@ -1,0 +1,48 @@
+#description {
+    position: absolute;
+    width: 320px;
+    height: 480px;
+    max-height: 100%;
+    overflow: scroll;
+}
+
+[class*='description-content-area'] {
+    position: absolute;
+    left: calc(50% - 160px);
+    top: 0;
+    background: white;
+    width: 320px;
+    height: 480px;
+    max-height: 100%;
+    padding: 10px;
+    -webkit-transition: top 0.5s;
+    transition: top 0.5s;
+    overflow: scroll;
+}
+
+.description-content-area-out {
+    top: 100%;
+}
+
+.description-content-area-in {
+    top: 0;
+}
+
+.description-content-area-out h3,
+.description-content-area-in h3 {
+    font-size: 1.4em;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#description .info-descriptor {
+    margin: 10px 0 3px 0;
+    font-weight: bold;
+}
+
+@media screen and (min-height: 480px) {
+    .description-content-area-in {
+        top: calc(50% - 240px);
+    }
+}

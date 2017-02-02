@@ -13,19 +13,21 @@
     display: block;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 [class*='add-marker-content-area'] {
     position: absolute;
     left: calc(50% - 160px);
-    top: calc(50% - 240px);
+    top: 0;
     background: white;
     width: 320px;
     height: 480px;
+    max-height: 100%;
     padding: 10px;
     -webkit-transition: top 0.5s;
     transition: top 0.5s;
+    overflow: scroll;
 }
 
 .add-marker-content-area-out {
@@ -33,10 +35,11 @@
 }
 
 .add-marker-content-area-in {
-    top: calc(50% - 240px);
+    top: 0;
 }
 
-.add-marker-content-area h3 {
+.add-marker-content-area-out h3,
+.add-marker-content-area-in h3 {
     font-size: 1.4em;
     font-weight: bold;
     text-align: center;
@@ -90,4 +93,10 @@ form .warning {
     margin-left: 0.5%;
     background-color: #ff6262;
     color: white;
+}
+
+@media screen and (min-height: 480px) {
+    .add-marker-content-area-in {
+        top: calc(50% - 240px);
+    }
 }

@@ -66,6 +66,7 @@ nmm.MapView = (function () {
             key: mk.id,
             type: mk.type,
             title: mk.title,
+            description: mk.description,
             icon: this._icons[mk.type]
         });
 

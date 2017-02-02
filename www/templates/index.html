@@ -19,6 +19,8 @@
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/add-marker.css') }}">
     <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/description.css') }}">
+    <link rel="stylesheet"
           href="{{ url_for('static', filename='css/aside.css') }}">
 </head>
 <body>
@@ -90,6 +92,9 @@
     </aside>
     <section id="add-marker" data-bind="visible: addMarkerModal.modalOn">
         {% include "place_new_marker.html" %}
+    </section>
+    <section id="description" data-bind="visible: descriptionModal.modalOn, attr: {class: descriptionModal.modalClass}">
+        {% include "description.html" %}
     </section>
 </div>
 <script>

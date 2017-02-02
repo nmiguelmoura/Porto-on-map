@@ -19,7 +19,7 @@ nmm.Model = (function () {
                 other: '/static/assets/icon_other.png'
             },
             currentMarker: null
-        }
+        };
     }
 
     var p = Model.prototype;
