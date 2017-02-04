@@ -1,121 +1,61 @@
 /**
- * Created by Nuno on 24/01/17.
+ * Created by Nuno on 04/02/17.
  */
-
 var nmm = nmm || {};
-
 nmm.Model = (function () {
     'use strict';
 
+    var self;
+
     function Model(controller) {
+        self = this;
         this._controller = controller;
-        this.params = {
-            marker_icons: {
+
+        //app status
+        this.appStatus = {
+            state: ko.observable(0)
+        };
+        this.appStatus.message = ko.computed(function () {
+            switch (self.appStatus.state()) {
+                case -1:
+                    return "An error occurred and some content could not be loaded. Please check your Internet connection and reload the page!";
+
+                case 0:
+                    return 'Loading map';
+
+                case 1:
+                    return 'Loading markers';
+
+                case 2:
+                    return 'Login to place markers';
+
+                case 3:
+                    return 'Click to place marker';
+            }
+        });
+
+        //map parameters
+        this.mapParams = {
+            init: {
+                city: 'Porto',
+                lat: 41.1452347,
+                lng: -8.6454186,
+                zoom: 14
+            },
+            markerIcons: {
                 monument: '/static/assets/icon_monument.png',
                 museum: '/static/assets/icon_museum.png',
                 hotel: '/static/assets/icon_hotel.png',
                 restaurant: '/static/assets/icon_restaurant.png',
                 coffee: '/static/assets/icon_coffee.png',
                 other: '/static/assets/icon_other.png'
-            },
-            currentMarker: null
+            }
         };
-
-        this.userFavs = [];
     }
 
     var p = Model.prototype;
 
-    p.removeFavourite = function (markerToRemove) {
-        var self = this;
-        $.post("/unfav", {
-                marker_id: markerToRemove
-            },
-            function (data, status) {
-                if (status === 'success') {
-                    var i,
-                        length = self.userFavs.length;
-
-                    for (i = 0; i < length; i++) {
-                        if (self.userFavs[i].marker_id === markerToRemove) {
-                            self.userFavs.splice(i, 1);
-                            break;
-                        }
-                    }
-                } else {
-                    alert('Something went wrong while unfavouriting this marker.' +
-                        ' Please reload the page and try again.')
-                }
-            });
-
-    };
-
-    p.storeFavourite = function (markerId) {
-        var self = this;
-        $.post("/fav", {
-                marker_id: markerId
-            },
-            function (data, status) {
-                if (status === 'success') {
-                    self.userFavs.push({
-                        marker_id: markerId
-                    });
-                } else {
-                    alert('Something went wrong while favouriting this marker.' +
-                        ' Please reload the page and try again.')
-                }
-            });
-    };
-
-    p.checkIfUserFavourite = function (markerId) {
-        var i,
-            length = this.userFavs.length;
-
-        for (i = 0; i < length; i++) {
-            console.log(this.userFavs[i].marker_id, markerId);
-            if (this.userFavs[i].marker_id === markerId) {
-                return true;
-            }
-        }
-        return false;
-    };
-
-    p.getUserFavourites = function (user_id) {
-        if (user_id) {
-            var self = this,
-                url = '/favourites/' + user_id + '/JSON/';
-            $.ajax({
-                url: url,
-                dataType: 'json'
-            })
-                .done(function (result) {
-                    self.userFavs = result.Favourite;
-                })
-                .fail(function (error) {
-                    alert("It wasn't possible to load your favourites. Please reload the page and try again.");
-                });
-        } else {
-            this.userFavs = [];
-        }
-    };
-
-    p.storeNewMarker = function (markerData) {
-        //store in db
-        var self = this;
-        $.post("/add", markerData,
-            function (data, status) {
-                if (status === 'success') {
-                    self.markers.push(data.Marker);
-                    console.log(data.Marker);
-                    self._controller.updateExistingMarkers(data.Marker);
-                } else {
-                    alert('Something went wrong while saving your marker.' +
-                        ' Please reload the page and try again.')
-                }
-            });
-    };
-
-    p.getLocalsListFromDB = function () {
+    p.getDBMarkersList = function () {
         var self = this,
             url = '/markers/JSON/';
         $.ajax({
@@ -125,11 +65,11 @@ nmm.Model = (function () {
             .done(function (result) {
                 var data = result.Marker;
                 self.markers = data;
-                self._controller.markersLoaded();
+                self._controller.markersListLoadTaskEnd(true, data);
             })
             .fail(function (error) {
                 self.markers = [];
-                self._controller.mapLoadingFailed();
+                self._controller.markersListLoadTaskEnd(false);
             });
     };
 

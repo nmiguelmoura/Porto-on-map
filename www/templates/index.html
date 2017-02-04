@@ -2,112 +2,38 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Porto on map</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700"
-          rel="stylesheet">
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/reset.css') }}">
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/grid.css') }}">
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/general.css') }}">
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/header.css') }}">
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/map.css') }}">
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/add-marker.css') }}">
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/description.css') }}">
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/aside.css') }}">
+    <title>Get to konow Porto</title>
 </head>
 <body>
 <div class="global-container">
     <header>
-        <h1 class="col-sm-12-12">Get to Know Porto</h1>
+        {% include "header.html" %}
     </header>
-    <section id="map">
+    <div class="main-content">
+        <div class="mapArea">
+            <section id="map" style="width: 400px; height: 400px;"></section>
+            <p class="message-box" data-bind="text: model.appStatus.message"></p>
+        </div>
+        <aside>
 
-    </section>
-    <section class="message-box" data-bind="visible: messageToUser">
-        <p class="message-box-p" data-bind="text: messageToUser"></p>
-    </section>
-    <aside class="wrapper aside-out" data-bind="attr: {class: asideClass}">
-        <div class="aside-switch">
-            <button class="menu-in"
-                    data-bind="click: toggleAside, attr: {class: menuButtonClass}"></button>
-        </div>
-        <div class="aside-content">
-            <div class="wrapper-inside aside-content-area" data-bind="if: asideContentOn() === 'locals'">
-                <div class="padded-col-sm-12-12">
-                    <h2 class="col-sm-12-12">What to see?</h2>
-                </div>
-                <div class="padded-col-sm-12-12">
-                    <label><input type="checkbox" data-bind="checked: checks.monument">Monuments</label>
-                    <label><input type="checkbox" data-bind="checked: checks.museum">Museums</label>
-                    <label><input type="checkbox" data-bind="checked: checks.hotel">Hotels</label>
-                    <label><input type="checkbox" data-bind="checked: checks.restaurant">Restaurants</label>
-                    <label><input type="checkbox" data-bind="checked: checks.coffee">Coffee Shops</label>
-                    <label><input type="checkbox" data-bind="checked: checks.other">Others</label>
-                </div>
-            </div>
-            <div class="wrapper-inside aside-content-area list" data-bind="if: asideContentOn() === 'list'">
-                <div class="padded-col-sm-12-12">
-                    <h2 class="col-sm-12-12">List of locals</h2>
-                    <div class="col-sm-12-12 list-of-locals" data-bind="foreach: displayedMarkers">
-                        <p data-bind="text: title, click: $parent.listClicked"></p>
-                    </div>
-                </div>
-            </div>
-            <div class="wrapper-inside aside-content-area" data-bind="css: {hide: asideContentOn() !== 'login', show: asideContentOn() === 'login'}">
-                <div class="padded-col-sm-12-12">
-                    <h2 class="col-sm-12-12">My Area</h2>
-                </div>
-                <div class="padded-col-sm-12-12 aside-content-login">
-                    {% include "login_system.html" %}
-                </div>
-                <div class="padded-col-sm-12-12 aside-content-personal">
-                    <label><input type="checkbox" data-bind="checked: checks.favouritesOnly">Show only my
-                        favourites</label>
-                    <label><input type="checkbox" data-bind="checked: checks.userOnly">Show only my shares</label>
-                    <!--<div class="wrapper-inside">
-                        <button>Logout</button>
-                    </div>-->
-                </div>
-            </div>
-            <div class="wrapper-inside aside-content-area" data-bind="if: asideContentOn() === 'weather'">
-                <div class="padded-col-sm-12-12">
-                    <h2 class="col-sm-12-12">Weather</h2>
-                </div>
-            </div>
-            <div class="col-sm-12-12 aside-content-bottom-buttons">
-                <button class="menu-check" data-key="0" data-bind="click: toggleContent"></button>
-                <button class="menu-list" data-key="1" data-bind="click: toggleContent"></button>
-                <button class="menu-login" data-key="2" data-bind="click: toggleContent"></button>
-                <button class="menu-login" data-key="3" data-bind="click: toggleContent"></button>
-            </div>
-        </div>
-    </aside>
-    <section id="add-marker" data-bind="visible: addMarkerModal.modalOn">
-        {% include "place_new_marker.html" %}
-    </section>
-    <section id="description" class="description-content-area-out" data-bind="visible: descriptionModal.modalOn, attr: {class: descriptionModal.modalClass}">
-        {% include "description.html" %}
-    </section>
+        </aside>
+    </div>
+    <div class="modals"></div>
 </div>
+
 <script>
-    function mapCallback(){
-        nmm.mapView.renderMap();
+    function mapCallback() {
+        nmm.vm.renderMap();
     }
 </script>
-<script src="{{ url_for('static', filename='src/libs/jquery.js') }}"></script>
-<script src="{{ url_for('static', filename='src/libs/knockout.js') }}"></script>
+<script src="{{ url_for('static', filename='_src/libs/jquery.js') }}"></script>
+<script src="{{ url_for('static', filename='_src/libs/knockout.js') }}"></script>
 <script src="{{ url_for('static', filename='src/MapView.js') }}"></script>
 <script src="{{ url_for('static', filename='src/Model.js') }}"></script>
 <script src="{{ url_for('static', filename='src/ViewModel.js') }}"></script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2qVniG_TU58tYkUfM04i0Stxl9B_FzSQ&callback=mapCallback">
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2qVniG_TU58tYkUfM04i0Stxl9B_FzSQ&callback=mapCallback">
 </script>
 </body>
 </html>
