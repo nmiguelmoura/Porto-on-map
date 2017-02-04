@@ -69,12 +69,12 @@
                     {% include "login_system.html" %}
                 </div>
                 <div class="padded-col-sm-12-12 aside-content-personal">
-                    <label><input type="checkbox">Show only my
+                    <label><input type="checkbox" data-bind="checked: checks.favouritesOnly">Show only my
                         favourites</label>
-                    <label><input type="checkbox">Show only my shares</label>
-                    <div class="wrapper-inside">
+                    <label><input type="checkbox" data-bind="checked: checks.userOnly">Show only my shares</label>
+                    <!--<div class="wrapper-inside">
                         <button>Logout</button>
-                    </div>
+                    </div>-->
                 </div>
             </div>
             <div class="wrapper-inside aside-content-area" data-bind="if: asideContentOn() === 'weather'">

@@ -71,9 +71,6 @@ nmm.Model = (function () {
         var i,
             length = this.userFavs.length;
 
-        console.log(nmm.user_id);
-        console.log(this.userFavs);
-
         for (i = 0; i < length; i++) {
             console.log(this.userFavs[i].marker_id, markerId);
             if (this.userFavs[i].marker_id === markerId) {

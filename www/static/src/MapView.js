@@ -46,9 +46,25 @@ nmm.MapView = (function () {
     };
 
     p.displayMarkers = function (markersToShow) {
+        var fav = this._controller.getFavourites(),
+            user_id = this._controller.getUserId();
+
         if(this._markers.length > 0) {
             this._markers.forEach(function (mk) {
-                mk.setVisible(markersToShow[mk.type]);
+                var userCreated = mk.user_id === user_id,
+                    favourite = this._controller.checkIfUserFavourite(mk.key),
+                    display = markersToShow[mk.type];
+
+
+                if(markersToShow.userOnly && !userCreated) {
+                    display = false;
+                }
+
+                if(markersToShow.favouritesOnly && !favourite) {
+                    display = false;
+                }
+
+                mk.setVisible(display);
             }, this);
         }
     };
@@ -66,6 +82,7 @@ nmm.MapView = (function () {
             key: mk.id,
             type: mk.type,
             title: mk.title,
+            user_id: mk.user_id,
             description: mk.description,
             icon: this._icons[mk.type]
         });

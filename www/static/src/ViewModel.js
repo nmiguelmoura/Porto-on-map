@@ -53,7 +53,9 @@ nmm.ViewModel = (function () {
             hotel: ko.observable(true),
             restaurant: ko.observable(true),
             coffee: ko.observable(true),
-            other: ko.observable(true)
+            other: ko.observable(true),
+            userOnly: ko.observable(false),
+            favouritesOnly: ko.observable(false)
         };
 
         this.addMarkerModal = {
@@ -89,6 +91,18 @@ nmm.ViewModel = (function () {
     }
 
     var p = ViewModel.prototype;
+
+    p.checkIfUserFavourite = function (marker_id) {
+        return this._model.checkIfUserFavourite(marker_id)
+    };
+
+    p.getUserId = function () {
+        return this._user_id();
+    };
+
+    p.getFavourites = function () {
+        return this._model.userFavs;
+    };
 
     p.toggleUserFavourite = function () {
         if (this._user_id) {
@@ -241,13 +255,28 @@ nmm.ViewModel = (function () {
                 hotel: this.checks.hotel(),
                 restaurant: this.checks.restaurant(),
                 coffee: this.checks.coffee(),
-                other: this.checks.other()
+                other: this.checks.other(),
+                userOnly: this.checks.userOnly(),
+                favouritesOnly: this.checks.favouritesOnly()
             });
 
             var list = [];
 
             this._model.markers.forEach(function (mk) {
-                if (this.checks[mk.type]()) {
+                var userCreated = mk.user_id === this._user_id(),
+                    favourite = this.checkIfUserFavourite(mk.id),
+                    display = this.checks[mk.type]();
+
+
+                if(this.checks.userOnly() && !userCreated) {
+                    display = false;
+                }
+
+                if(this.checks.favouritesOnly() && !favourite) {
+                    display = false;
+                }
+
+                if (display) {
                     list.push(mk);
                 }
             }, this);

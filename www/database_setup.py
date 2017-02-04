@@ -35,7 +35,8 @@ class Marker(Base):
             "latitude": self.latitude,
             "longitude": self.longitude,
             "description": self.description,
-            "user_id": self.user.name,
+            "user_id": self.user.id,
+            "user_name": self.user.name,
             "type": self.type
         }
 

@@ -124,6 +124,7 @@ aside h4 {
 
 .aside-content-personal {
     display: none;
+    position: relative;
 }
 
 .aside-content-personal button {
