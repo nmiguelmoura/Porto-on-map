@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700"
+          rel="stylesheet">
     <title>Get to konow Porto</title>
 </head>
 <body>
@@ -19,7 +21,10 @@
 
         </aside>
     </div>
-    <div class="modals"></div>
+    <div id="modals" class="modal-out" data-bind="model.modals.modalClass">
+        {% include "modal_add_marker.html" %}
+        {% include "modal_view_marker.html" %}
+    </div>
 </div>
 
 <script>

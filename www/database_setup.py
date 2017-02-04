@@ -37,6 +37,7 @@ class Marker(Base):
             "description": self.description,
             "user_id": self.user.id,
             "user_name": self.user.name,
+            "user_pic": self.user.picture,
             "type": self.type
         }
 

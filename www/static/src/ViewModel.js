@@ -7,7 +7,7 @@ nmm.ViewModel = (function () {
 
     var self;
 
-    function ViewModel () {
+    function ViewModel() {
         self = this;
         this._init();
     }
@@ -17,21 +17,35 @@ nmm.ViewModel = (function () {
 
     //User interactions
 
+    p.closeModal = function () {
+        this.model.modals.modalClass('modal-out');
+        this.model.modals.addOn(false);
+        this.model.modals.viewOn(false);
+    };
+
     p.markerClicked = function (marker) {
-        console.log(this, marker.id)
+        this.model.setCurrentMarker(marker.id);
+        this.model.modals.modalClass('modal-in');
+        this.model.modals.addOn(false);
+        this.model.modals.viewOn(true);
     };
 
     p.mapClicked = function () {
-        console.log('place marker');
+        this.model.modals.modalClass('modal-in');
+        this.model.modals.addOn(true);
+        this.model.modals.viewOn(false);
     };
 
-
+    p.userIdUpdate = function (user_id) {
+        this.model.user_id(user_id);
+        this.model.getUserFavourites(user_id);
+    };
 
 
     //Loading tasks
 
     p.markersListLoadTaskEnd = function (successful, data) {
-        if(successful) {
+        if (successful) {
             //MARKERS LOADED FROM DB
             this._mapView.createMarkers(data, this.model.mapParams.markerIcons);
             this.model.appStatus.state(2);
@@ -42,7 +56,7 @@ nmm.ViewModel = (function () {
     };
 
     p.mapTaskEnd = function (successful) {
-        if(successful) {
+        if (successful) {
             //MAP LOADED
             this.model.getDBMarkersList();
             this.model.appStatus.state(1);
@@ -52,7 +66,7 @@ nmm.ViewModel = (function () {
         }
     };
 
-
+    //initialize
 
     p.renderMap = function () {
         this._mapView.renderMap(this.model.mapParams.init);

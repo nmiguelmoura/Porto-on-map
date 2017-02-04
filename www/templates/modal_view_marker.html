@@ -1,0 +1,21 @@
+<div class="modal-window-view"  data-bind="visible: model.modals.viewOn">
+    <h3 data-bind="text: model.mapParams.currentMarker.title"></h3>
+    <div>
+        <p class="topic">Type</p>
+        <p data-bind="text: model.mapParams.currentMarker.type"></p>
+        <p class="topic">Coordinates</p>
+        <p class="text-small">Lat: <span data-bind="text: model.mapParams.currentMarker.latitude"></span> — Long: <span data-bind="text: model.mapParams.currentMarker.longitude"></span></p>
+        <p class="topic">Description</p>
+        <p data-bind="text: model.mapParams.currentMarker.description"></p>
+    </div>
+    <div>
+        <p> Created by <span data-bind="text: model.mapParams.currentMarker.sharedBy"></span></p>
+        <img data-bind="attr: {src: model.mapParams.currentMarker.sharerPic}">
+    </div>
+    <div>
+        <div>
+            <div></div>
+        </div>
+        <button data-bind="click: closeModal">Close</button>
+    </div>
+</div>

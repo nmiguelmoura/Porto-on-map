@@ -11,6 +11,9 @@ nmm.Model = (function () {
         self = this;
         this._controller = controller;
 
+        //user params
+        this.user_id = ko.observable();
+
         //app status
         this.appStatus = {
             state: ko.observable(0)
@@ -27,10 +30,11 @@ nmm.Model = (function () {
                     return 'Loading markers';
 
                 case 2:
-                    return 'Login to place markers';
-
-                case 3:
-                    return 'Click to place marker';
+                    if(self.user_id()) {
+                        return 'Click to place a marker';
+                    } else {
+                        return 'Login to place markers';
+                    }
             }
         });
 
@@ -49,11 +53,86 @@ nmm.Model = (function () {
                 restaurant: '/static/assets/icon_restaurant.png',
                 coffee: '/static/assets/icon_coffee.png',
                 other: '/static/assets/icon_other.png'
+            },
+            markers: [],
+            currentMarker: {
+                id: ko.observable(),
+                title: ko.observable(),
+                type: ko.observable(),
+                latitude: ko.observable(),
+                longitude: ko.observable(),
+                description: ko.observable(),
+                sharedBy: ko.observable(),
+                sharerPic: ko.observable()
             }
+        };
+
+        //favourites
+        this.userFavs = [];
+
+        //modal info
+        this.modals = {
+            modalClass: ko.observable('modal-out'),
+            addOn: ko.observable(false),
+            viewOn: ko.observable(false)
         };
     }
 
     var p = Model.prototype;
+
+    p.setCurrentMarker = function (markerId) {
+        var i,
+            length = this.mapParams.markers.length,
+            mk,
+            c = this.mapParams.currentMarker;
+
+        for(i = 0; i < length; i++) {
+            mk = this.mapParams.markers[i];
+            if(mk.id === markerId) {
+                c.id(mk.id);
+                c.title(mk.title);
+                c.type(mk.type);
+                c.latitude(mk.latitude);
+                c.longitude(mk.longitude);
+                c.description(mk.description);
+                c.sharedBy(mk.user_name);
+                c.sharerPic(mk.user_pic);
+                break;
+            }
+        }
+    };
+
+    p.checkIfUserFavourite = function (markerId) {
+        var i,
+            length = this.userFavs.length;
+
+        for (i = 0; i < length; i++) {
+            console.log(this.userFavs[i].marker_id, markerId);
+            if (this.userFavs[i].marker_id === markerId) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    p.getUserFavourites = function (user_id) {
+        if (user_id) {
+            var self = this,
+                url = '/favourites/' + user_id + '/JSON/';
+            $.ajax({
+                url: url,
+                dataType: 'json'
+            })
+                .done(function (result) {
+                    self.userFavs = result.Favourite;
+                })
+                .fail(function (error) {
+                    alert("It wasn't possible to load your favourites. Please reload the page and try again.");
+                });
+        } else {
+            this.userFavs = [];
+        }
+    };
 
     p.getDBMarkersList = function () {
         var self = this,
@@ -64,11 +143,10 @@ nmm.Model = (function () {
         })
             .done(function (result) {
                 var data = result.Marker;
-                self.markers = data;
+                self.mapParams.markers = data;
                 self._controller.markersListLoadTaskEnd(true, data);
             })
             .fail(function (error) {
-                self.markers = [];
                 self._controller.markersListLoadTaskEnd(false);
             });
     };
