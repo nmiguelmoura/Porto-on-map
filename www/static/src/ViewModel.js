@@ -69,22 +69,43 @@ nmm.ViewModel = (function () {
         };
 
         this.descriptionModal = {
+            modalMarkerKey: ko.observable(),
             modalOn: ko.observable(false),
             modalClass: ko.observable('description-content-area-out'),
             modalTitle: ko.observable(''),
             modalType: ko.observable(''),
-            modalCoordinates: ko.observable(),
+            modalCoordinates: ko.observable(''),
             modalDescription: ko.observable(''),
-            modalImageSrc: ko.observable(''),
-            modalFav: ko.observable('')
+            modalFav: ko.observable()
         };
+
+        this.descriptionModal.modalFavClass = ko.computed(function () {
+            if (self.descriptionModal.modalFav()) {
+                return 'button-favourite';
+            } else {
+                return 'button-unfavourite';
+            }
+        });
     }
 
     var p = ViewModel.prototype;
 
+    p.toggleUserFavourite = function () {
+        if (this._user_id) {
+            var newFavState = !this.descriptionModal.modalFav();
+            this.descriptionModal.modalFav(newFavState);
+
+            if (newFavState) {
+                this._model.storeFavourite(this.descriptionModal.modalMarkerKey());
+            } else {
+                this._model.removeFavourite(this.descriptionModal.modalMarkerKey());
+            }
+        }
+    };
+
     p.listClicked = function (object, event) {
         var marker = self._mapView.getMarker(object);
-        if(marker) {
+        if (marker) {
             self.markerClicked(marker);
         }
     };
@@ -113,12 +134,19 @@ nmm.ViewModel = (function () {
 
     p.showDescriptionModal = function () {
         var marker = this._model.params.currentMarker;
-        console.log(marker);
+        this.descriptionModal.modalMarkerKey(marker.key);
         this.descriptionModal.modalOn(true);
         this.descriptionModal.modalTitle(marker.title);
         this.descriptionModal.modalType(marker.type);
         this.descriptionModal.modalCoordinates('Lat: ' + marker.position.lat() + ' — Lng: ' + marker.position.lng());
         this.descriptionModal.modalDescription(marker.description);
+
+        var favourite = false;
+        if (this._user_id()) {
+            favourite = this._model.checkIfUserFavourite(marker.key);
+            console.log(marker);
+        }
+        this.descriptionModal.modalFav(favourite);
 
         //this.addMarkerModal.modalCoordinates('Lat: ' + latitude + ' — Lng: ' + longitude);
 
@@ -129,12 +157,12 @@ nmm.ViewModel = (function () {
 
     p.resetDescriptionModal = function () {
         this.descriptionModal.modalOn(false);
+        this.descriptionModal.modalMarkerKey('');
         this.descriptionModal.modalClass('description-content-area-out');
         this.descriptionModal.modalTitle('');
         this.descriptionModal.modalType('other');
         this.descriptionModal.modalCoordinates('');
         this.descriptionModal.modalDescription('');
-        this.descriptionModal.modalImageSrc('');
         this.descriptionModal.modalFav('');
 
         this._mapView.toggleMarkerAnimation(this._model.params.currentMarker);
@@ -166,6 +194,7 @@ nmm.ViewModel = (function () {
 
     p.userIdUpdate = function (user_id) {
         this._user_id(user_id);
+        this._model.getUserFavourites(user_id);
     };
 
     p.mapClicked = function (latitude, longitude) {
@@ -182,11 +211,11 @@ nmm.ViewModel = (function () {
         this._model.params.currentMarker = marker;
         this._mapView.toggleMarkerAnimation(marker);
 
-        if(this.menuButtonClass() === 'menu-out') {
+        if (this.menuButtonClass() === 'menu-out') {
             this.toggleAside();
         }
 
-        if(this.descriptionModal.modalOn()) {
+        if (this.descriptionModal.modalOn()) {
             this.resetDescriptionModal()
         } else {
             this.showDescriptionModal(marker);

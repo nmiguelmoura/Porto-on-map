@@ -93,7 +93,7 @@
     <section id="add-marker" data-bind="visible: addMarkerModal.modalOn">
         {% include "place_new_marker.html" %}
     </section>
-    <section id="description" data-bind="visible: descriptionModal.modalOn, attr: {class: descriptionModal.modalClass}">
+    <section id="description" class="description-content-area-out" data-bind="visible: descriptionModal.modalOn, attr: {class: descriptionModal.modalClass}">
         {% include "description.html" %}
     </section>
 </div>

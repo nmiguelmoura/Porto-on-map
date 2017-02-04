@@ -10,6 +10,7 @@ import google_connect
 import database_interaction
 import add_marker
 import favourite
+import unfavourite
 
 app = Flask(__name__)
 
@@ -19,6 +20,7 @@ fb_connect = facebook_connect.Facebook_connect()
 g_fb_disconnect_page = disconnect.Disconnect()
 marker = add_marker.Add_marker()
 fav = favourite.Favourite()
+unfav = unfavourite.Unfavourite()
 
 
 @app.route('/')
@@ -49,6 +51,9 @@ def add_marker():
 def favourite_handler():
     return fav.launch()
 
+@app.route('/unfav', methods=['POST'])
+def unfavourite_handler():
+    return unfav.launch()
 
 @app.route('/gconnect', methods=['POST'])
 def gconnect():

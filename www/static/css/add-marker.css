@@ -73,11 +73,11 @@ form .warning {
     color: crimson;
 }
 
-.buttons {
+form .buttons {
     margin-top: 10px;
 }
 
-.buttons button {
+form .buttons button {
     cursor: pointer;
     border: none;
     padding: 0;
@@ -89,7 +89,7 @@ form .warning {
     background-color: #EEEEEE;
 }
 
-.buttons button:last-child {
+form .buttons button:last-child {
     margin-left: 0.5%;
     background-color: #ff6262;
     color: white;

@@ -35,6 +35,25 @@ class Database_interaction:
         self.session.commit()
         return new_marker
 
+    def delete_favourite(self, user_id, marker_id):
+        fav = self.session.query(Favourite) \
+            .filter_by(user_id=user_id, marker_id=marker_id) \
+            .one()
+
+        self.session.delete(fav)
+        self.session.commit()
+        return 'Unfavourited marker %s' % marker_id
+
+    def store_favourite(self, user_id, marker_id):
+        new_favourite = Favourite(
+            user_id=user_id,
+            marker_id=marker_id
+        )
+
+        self.session.add(new_favourite)
+        self.session.commit()
+        return new_favourite
+
     def query_user_favourites(self, user_id):
         return self.session.query(Favourite) \
             .filter_by(user_id=user_id) \
