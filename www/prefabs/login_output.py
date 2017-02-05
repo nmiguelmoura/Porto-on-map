@@ -10,7 +10,7 @@ class Login_output:
     def get_output(self):
         # Generate and return output with user info (name and picture).
         output = ''
-        output += '<h4>Welcome, '
+        output += '<p>Welcome, '
         output += login_session['username']
-        output += '!</h4>'
+        output += '!</p>'
         return output

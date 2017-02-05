@@ -49,6 +49,7 @@
     height: 44px;
     border: none;
     margin: 5px;
+    cursor: pointer;
     width: calc(100% - 10px);
 }
 
@@ -93,6 +94,7 @@
     margin: 5px;
     width: calc(100% - 10px);
     height: 64px;
+    cursor: pointer;
     border: 1px solid #FF6262;
 }
 

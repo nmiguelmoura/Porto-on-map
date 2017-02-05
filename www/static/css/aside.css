@@ -1,0 +1,228 @@
+aside {
+    position: absolute;
+    top: 44px;
+    right: 0;
+    width: 320px;
+    height: calc(100% - 44px);
+    display: flex;
+    background-color: #EEE;
+    /*background-color: rgba(68, 68, 68, 0.9);*/
+}
+
+.menu-in {
+    -webkit-transition: right 0.5s;
+    transition: right 0.5s;
+    right: 0;
+}
+
+.menu-out {
+    -webkit-transition: right 0.5s;
+    transition: right 0.5s;
+    right: -251px;
+}
+
+aside .switch {
+    width: 70px;
+    border-right: 1px solid white;
+}
+
+aside .switch button,
+aside .aside-content button {
+    width: 53px;
+    height: 53px;
+    border: none;
+    background-color: transparent;
+    overflow: hidden;
+    cursor: pointer;
+    outline: none;
+    background-image: url(../assets/layout-sprite.png);
+    -webkit-background-size: 486px 61px;
+    background-size: 486px 61px;
+}
+
+aside .switch button {
+    position: absolute;
+    left: 5px;
+    bottom: 8px;
+}
+
+.menu-out button{
+    background-position: -122.5px -1px;
+}
+
+.menu-in button {
+    background-position: -183.5px -1px;
+}
+
+aside .aside-content {
+    width: 250px;
+}
+
+aside .selectors {
+    position: absolute;
+    bottom: 8px;
+    right: 9px;
+}
+
+aside .selectors button {
+    margin-left: 5px;
+}
+
+aside .selectors button:nth-child(1) {
+    background-position: -244.5px -1px;
+}
+
+aside .selectors button:nth-child(2) {
+    background-position: -305px -1px;
+}
+
+aside .selectors button:nth-child(3) {
+    background-position: -365.5px -1px;
+}
+
+aside .selectors button:nth-child(4) {
+    background-position: -426px -1px;
+}
+
+#checks,
+#list,
+#my-area,
+#weather {
+    padding: 10px 0 10px 5px;
+    height: 100%;
+}
+
+aside h2 {
+    color: white;
+    border-bottom: 1px solid white;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+aside .aside-specific-content {
+    height: calc(100% - 85px);
+    overflow: scroll;
+}
+
+#checks label,
+#my-area label {
+    display: block;
+    width: 100%;
+    color: white;
+    margin-bottom: 5px;
+}
+
+#checks label:nth-child(1) {
+    color: greenyellow;
+}
+
+#checks label:nth-child(2) {
+    color: #0099ff;
+}
+
+#checks label:nth-child(3) {
+    color: #ff9900;
+}
+
+#checks label:nth-child(4) {
+    color: #ff00ff;
+}
+
+#checks label:nth-child(5) {
+    color: #FFD698;
+}
+
+#checks label:nth-child(6) {
+    color: #009900;
+}
+
+#list li {
+    color: white;
+    cursor:pointer;
+    font-size: 0.875em;
+    margin-bottom: 3px;
+}
+
+
+
+
+
+
+.provider-login {
+    position: relative;
+    display: block;
+    width: 153px;
+    margin: 5px auto;
+    margin-bottom: 10px;
+}
+
+.custom-btn {
+    width: 153px;
+    height: 32px;
+}
+
+.custom-btn img {
+    width: 100%;
+}
+
+#signInButton,
+#fbSignInButton {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+
+}
+
+#fbSignInButton button {
+    background: none;
+    width: 153px !important;
+    height: 30px !important;
+    margin: 0 !important;
+
+}
+
+
+#result p {
+    color: white;
+    margin-bottom: 15px;
+}
+
+#my-area button {
+    width: calc(100% - 5px);
+    height: 44px;
+    background: none;
+    background-color: #EEE;
+    color: #444;
+    font-size: 1em;
+    margin-top: 15px;
+}
+
+
+#weather p {
+    color: white;
+    font-size: 0.875em;
+    margin-bottom: 15px;
+}
+
+#weather .weather-condition {
+    display: flex;
+}
+
+.weather-condition img {
+    width: 50px;
+}
+
+.weather-condition p {
+    margin-left: 10px;
+    margin-top: 8px;
+}
+
+
+
+@media screen and (min-width: 768px) {
+    aside {
+        top: 58px;
+        height: calc(100% - 58px);
+    }
+}

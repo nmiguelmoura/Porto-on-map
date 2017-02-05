@@ -31,15 +31,21 @@
             <section id="map"></section>
             <p class="message-box" data-bind="text: model.appStatus.message"></p>
         </div>
-        <aside>
-            <div>
-                <button></button>
+        <aside class="menu-out" data-bind="attr: {class: model.aside.asideClass}">
+            <div class="switch">
+                <button data-bind="click: toggleAside"></button>
             </div>
-            <div>
+            <div class="aside-content">
                 {% include "checks.html" %}
                 {% include "list.html" %}
                 {% include "my_area.html" %}
                 {% include "weather.html" %}
+                <div class="selectors">
+                    <button data-key="checks" data-bind="click: changeAsideContent"></button>
+                    <button data-key="list" data-bind="click: changeAsideContent"></button>
+                    <button data-key="my-area" data-bind="click: changeAsideContent"></button>
+                    <button data-key="weather" data-bind="click: changeAsideContent"></button>
+                </div>
             </div>
         </aside>
     </div>

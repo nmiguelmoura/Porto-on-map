@@ -33,7 +33,7 @@ nmm.Model = (function () {
                     if (self.user_id()) {
                         return 'Click to place a marker';
                     } else {
-                        return 'Login to place markers';
+                        return 'Login to place markers and set favourites';
                     }
                     break;
             }
@@ -96,7 +96,8 @@ nmm.Model = (function () {
         };
 
         this.aside = {
-            asideClass: ko.observable('modal-out'),
+            asideClass: ko.observable('menu-out'),
+            asideContent: ko.observable('checks'),
             checks: {
                 monument: ko.observable(true),
                 museum: ko.observable(true),

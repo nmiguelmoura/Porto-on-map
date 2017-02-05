@@ -1,8 +1,8 @@
-<div id="checks">
+<div id="checks" data-bind="visible: model.aside.asideContent() === 'checks'">
     <div>
         <h2>What to see?</h2>
     </div>
-    <div>
+    <div class="aside-specific-content">
         <label><input type="checkbox" data-bind="checked: model.aside.checks.monument">Monuments</label>
         <label><input type="checkbox" data-bind="checked: model.aside.checks.museum">Museums</label>
         <label><input type="checkbox" data-bind="checked: model.aside.checks.hotel">Hotels</label>

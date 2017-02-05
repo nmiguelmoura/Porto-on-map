@@ -26,6 +26,7 @@ nmm.ViewModel = (function () {
 
     p.listClicked = function (marker) {
         self.markerClicked(marker);
+        self.model.aside.asideClass('menu-out');
     };
 
     p.displayMarkers = function (markers) {
@@ -84,6 +85,17 @@ nmm.ViewModel = (function () {
     p.userIdUpdate = function (user_id) {
         this.model.user_id(user_id);
         this.model.getUserFavourites(user_id);
+    };
+
+    p.changeAsideContent = function (vm, target) {
+        var btnClicked = event.target.getAttribute('data-key');
+        this.model.aside.asideContent(btnClicked);
+    };
+
+    p.toggleAside = function () {
+        var status = this.model.aside.asideClass() === 'menu-out' ? 'menu-in' : 'menu-out';
+        this.model.aside.asideClass(status);
+        console.log(this.model.aside.asideClass());
     };
 
 

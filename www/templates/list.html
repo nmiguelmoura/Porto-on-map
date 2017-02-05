@@ -1,8 +1,8 @@
-<div id="list">
+<div id="list" data-bind="visible: model.aside.asideContent() === 'list'">
     <div>
         <h2>List of places</h2>
     </div>
-    <div>
+    <div class="aside-specific-content">
         <ul data-bind="foreach: model.displayList">
             <li data-bind="text: title, click: $parent.listClicked"></li>
         </ul>
