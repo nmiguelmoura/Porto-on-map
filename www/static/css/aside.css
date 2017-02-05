@@ -6,6 +6,7 @@ aside {
     height: calc(100% - 44px);
     display: flex;
     background-color: #EEE;
+    border-left: 1px solid #444;
     /*background-color: rgba(68, 68, 68, 0.9);*/
 }
 
@@ -23,7 +24,7 @@ aside {
 
 aside .switch {
     width: 70px;
-    border-right: 1px solid white;
+    border-right: 1px solid #444;
 }
 
 aside .switch button,
