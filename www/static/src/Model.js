@@ -63,6 +63,7 @@ nmm.Model = (function () {
                 latitude: ko.observable(),
                 longitude: ko.observable(),
                 description: ko.observable(),
+                phone: ko.observable(),
                 sharedBy: ko.observable(),
                 sharerPic: ko.observable(),
                 userFavourite: ko.observable()
@@ -243,6 +244,27 @@ nmm.Model = (function () {
         this.modals.add.warning('');
     };
 
+    p.getMarkerAditionalInfo = function (latitude, longitude) {
+        var url = 'https://api.foursquare.com/v2/venues/' +
+            'search?ll=' + latitude + ',' + longitude +
+            '&client_id=ZXTLOWD112CMOH4VNESAI4Q1HUUHJVDO4KXD3BA0WV543UZX' +
+            '&client_secret=H4AW4BW24PKHEECLABTR5N30ELYF54IXZMKL3LEWI1K0HIFC&v=20170204';
+
+        // Get open weather data.
+        $.ajax({
+            url: url,
+            dataType: 'json'
+        })
+            .done(function (result) {
+                // Store relevant data to display to user.
+                var phone = result.response.venues[0].contact.formattedPhone || 'No phone available';
+                self.mapParams.currentMarker.phone(phone);
+            })
+            .fail(function (error) {
+                self.mapParams.currentMarker.phone('Error loading phone number');
+            });
+    };
+
     p.setCurrentMarker = function (markerId) {
         var i,
             length = this.mapParams.markers.length,
@@ -259,10 +281,12 @@ nmm.Model = (function () {
                 c.type(mk.type);
                 c.latitude(mk.latitude);
                 c.longitude(mk.longitude);
+                c.phone('-');
                 c.description(mk.description);
                 c.sharedBy(mk.user_name);
                 c.sharerPic(mk.user_pic);
                 c.userFavourite(this.checkIfUserFavourite(markerId));
+                this.getMarkerAditionalInfo(mk.latitude, mk.longitude);
                 break;
             }
         }
