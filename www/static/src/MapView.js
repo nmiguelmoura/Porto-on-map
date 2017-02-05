@@ -17,7 +17,7 @@ nmm.MapView = (function () {
 
     var p = MapView.prototype;
 
-    p.toggleMarkerAnimation = function (markerId) {
+    p.toggleMarkerAnimation = function (markerId, isPreviousSelection) {
         var i,
             length = this._markers.length,
             mk;
@@ -30,7 +30,7 @@ nmm.MapView = (function () {
         }
 
         if (mk) {
-            if (!mk.getAnimation()) {
+            if (!mk.getAnimation() && !isPreviousSelection) {
                 mk.setAnimation(google.maps.Animation.BOUNCE);
             } else {
                 mk.setAnimation(null);

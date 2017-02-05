@@ -4,7 +4,7 @@
     </div>
     <div>
         <ul data-bind="foreach: model.displayList">
-            <li data-bind="text: title"></li>
+            <li data-bind="text: title, click: $parent.listClicked"></li>
         </ul>
     </div>
 </div>

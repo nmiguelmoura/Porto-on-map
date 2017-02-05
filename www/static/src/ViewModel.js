@@ -24,6 +24,10 @@ nmm.ViewModel = (function () {
         });
     };
 
+    p.listClicked = function (marker) {
+        self.markerClicked(marker);
+    };
+
     p.displayMarkers = function (markers) {
         this._mapView.displayMarkers(markers);
     };
@@ -58,8 +62,7 @@ nmm.ViewModel = (function () {
     };
 
     p.markerClicked = function (marker) {
-        this._mapView.toggleMarkerAnimation(this.model.mapParams.currentMarker.id());
-
+        this._mapView.toggleMarkerAnimation(this.model.mapParams.currentMarker.id(), true);
         this.model.setCurrentMarker(marker.id);
         this._mapView.toggleMarkerAnimation(this.model.mapParams.currentMarker.id());
         this.model.modals.modalClass('modal-in');
