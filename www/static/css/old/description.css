@@ -61,7 +61,7 @@
     margin: 0 auto;
     width: 60px;
     height: 60px;
-    background-image: url(../assets/layout-sprite.png);
+    background-image: url(../../assets/layout-sprite.png);
     -webkit-background-size: 486px 61px;
     background-size: 486px 61px;
     overflow: hidden;

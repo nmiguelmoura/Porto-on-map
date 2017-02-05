@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700"
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700"
           rel="stylesheet">
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/reset.css') }}">
@@ -12,7 +12,13 @@
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/general.css') }}">
     <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/header.css') }}">-->
+          href="{{ url_for('static', filename='css/header.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/map_area.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/modals.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/aside.css') }}">
     <title>Get to konow Porto</title>
 </head>
 <body>
@@ -21,8 +27,8 @@
         {% include "header.html" %}
     </header>
     <div class="main-content">
-        <div class="mapArea">
-            <section id="map" style="width: 400px; height: 400px;"></section>
+        <div class="map-area">
+            <section id="map"></section>
             <p class="message-box" data-bind="text: model.appStatus.message"></p>
         </div>
         <aside>
@@ -37,7 +43,7 @@
             </div>
         </aside>
     </div>
-    <div id="modals" class="modal-out" data-bind="model.modals.modalClass">
+    <div id="modals" class="modal-out" data-bind="attr: {class: model.modals.modalClass}">
         {% include "modal_add_marker.html" %}
         {% include "modal_view_marker.html" %}
     </div>

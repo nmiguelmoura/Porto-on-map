@@ -1,0 +1,142 @@
+#modals {
+    position: absolute;
+    background-color: white;
+    left: calc(50% - 160px);
+    width: 320px;
+    height: 480px;
+    max-height: 100%;
+    overflow: scroll;
+    box-shadow: 0 0 5px #888;
+}
+
+.modal-out {
+    top: 100%;
+}
+
+.modal-in {
+    -webkit-transition: top 0.5s;
+    transition: top 0.5s;
+    top: 0;
+}
+
+#modals h3 {
+    text-align: center;
+    font-size: 1.4em;
+    border-bottom: 1px solid #444444;
+    padding: 4px 5px;
+    margin-bottom: 10px;
+}
+
+#modals p {
+    padding: 0 5px;
+    font-size: 0.875em;
+    margin-bottom: 14px;
+}
+
+#modals .topic {
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+#modals .text-small {
+    font-size: 0.70em;
+}
+
+#modals button {
+    background-color: #EEE;
+    color: #444;
+    font-size: 1em;
+    height: 44px;
+    border: none;
+    margin: 5px;
+    width: calc(100% - 10px);
+}
+
+#modals .warning {
+    color: #FF6262;
+    height: 15px;
+    margin-bottom: 10px;
+}
+
+.modal-window-view .creator {
+    width: 100%;
+    height: 50px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.modal-window-view .creator p {
+    float: left;
+    width: 260px;
+    text-align: right;
+    margin-top: 15px;
+    font-weight: 700;
+}
+
+.modal-window-view .creator span {
+    font-weight: normal;
+}
+
+.modal-window-view .creator img {
+    float: right;
+    width: 50px;
+    margin-right: 5px;
+    border-radius: 25px;
+}
+
+.modal-window-view .buttons {
+    clear: both;
+}
+
+.modal-window-view .favourite,
+.modal-window-view .unfavourite {
+    margin: 5px;
+    width: calc(100% - 10px);
+    height: 64px;
+    border: 1px solid #FF6262;
+}
+
+.modal-window-view .favourite {
+    background-color: #ff6262;
+}
+
+.modal-window-view .favourite .pic,
+.modal-window-view .unfavourite .pic {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    background-image: url(../assets/layout-sprite.png);
+    -webkit-background-size: 486px 61px;
+    background-size: 486px 61px;
+    overflow: hidden;
+}
+
+.modal-window-view .favourite .pic {
+    background-position: -61px -1px;
+}
+
+.modal-window-add input,
+.modal-window-add textarea,
+.modal-window-add select {
+    border: 1px solid #979797;
+    text-indent: 5px;
+    height: 36px;
+    border-radius: 0;
+    margin: 0 5px 15px 5px;
+    width: calc(100% - 10px);
+}
+
+.modal-window-add textarea {
+    margin-bottom: 0;
+    height: 65px;
+}
+
+
+
+@media screen and (min-height: 480px) {
+    .modal-in {
+        -webkit-transition: top 0.5s;
+        transition: top 0.5s;
+        top: calc(50% - 240px);
+    }
+}

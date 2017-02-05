@@ -58,7 +58,7 @@ nmm.ViewModel = (function () {
         this.model.modals.modalClass('modal-out');
         this.model.modals.addOn(false);
         this.model.modals.viewOn(false);
-        this._mapView.toggleMarkerAnimation(this.model.mapParams.currentMarker.id());
+        this._mapView.toggleMarkerAnimation(this.model.mapParams.currentMarker.id(), true);
     };
 
     p.markerClicked = function (marker) {

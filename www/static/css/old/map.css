@@ -4,7 +4,7 @@
     left: 0;
     width: 100%;
     height: calc(100% - 44px);
-    background-image: url(../assets/porto_768.jpg);
+    background-image: url(../../assets/porto_768.jpg);
     background-size: cover;
 }
 
@@ -33,14 +33,14 @@
 
 @media screen and (min-width: 1024px) {
     #map {
-        background-image: url(../assets/porto_1024.jpg);
+        background-image: url(../../assets/porto_1024.jpg);
         background-size: cover;
     }
 }
 
 @media screen and (min-width: 1366px) {
     #map {
-        background-image: url(../assets/porto_1920.jpg);
+        background-image: url(../../assets/porto_1920.jpg);
         background-size: contain;
     }
 }

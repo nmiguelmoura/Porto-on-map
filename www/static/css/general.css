@@ -17,12 +17,14 @@ body {
     position: relative;
 }
 
-.hide {
-    display: none;
+.main-content {
+    height: calc(100% - 44px);
 }
 
-.show {
-    display: block;
+@media screen and (min-width: 768px) {
+    .main-content {
+    height: calc(100% - 58px);
+}
 }
 /*
 .page-content {

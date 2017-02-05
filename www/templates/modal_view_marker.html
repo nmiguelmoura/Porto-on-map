@@ -8,13 +8,13 @@
         <p class="topic">Description</p>
         <p data-bind="text: model.mapParams.currentMarker.description"></p>
     </div>
-    <div>
-        <p> Created by <span data-bind="text: model.mapParams.currentMarker.sharedBy"></span></p>
+    <div class="creator">
+        <p class="text-small"> Created by <span data-bind="text: model.mapParams.currentMarker.sharedBy"></span></p>
         <img data-bind="attr: {src: model.mapParams.currentMarker.sharerPic}">
     </div>
-    <div>
-        <div>
-            <div data-bind="attr: {class: model.mapParams.currentMarker.userFavouriteButtonClass}, click: toggleFavourite, visible: model.user_id">fav</div>
+    <div class="buttons">
+        <div data-bind="attr: {class: model.mapParams.currentMarker.userFavouriteButtonClass}, click: toggleFavourite, visible: model.user_id">
+            <div class="pic"></div>
         </div>
         <button data-bind="click: closeModal">Close</button>
     </div>
