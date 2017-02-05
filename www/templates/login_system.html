@@ -41,7 +41,10 @@
                             nmm.user_id = result.user_id;
                             if (result) {
                                 $('#result').html(result.html);
-                                document.getElementsByClassName('aside-content-personal')[0].style.display = 'block';
+                                $('#signInButton').attr('style', 'display: block');
+                                $('#fbSignInButton').attr('style', 'display: block');
+                                $('.provider-login').attr('style', 'display: block');
+                                //document.getElementsByClassName('aside-content-personal')[0].style.display = 'block';
                             } else if (authResult['error']) {
                                 console.log('There was an error: ' + authResult['error']);
                             }
@@ -103,13 +106,16 @@
                             // Handle or verify the server response if necessary.
                             if (result) {
                                 $('#result').html(result.html);
-                                document.getElementsByClassName('aside-content-personal')[0].style.display = 'block';
+                                $('#signInButton').attr('style', 'display: block');
+                                $('#fbSignInButton').attr('style', 'display: block');
+                                $('.provider-login').attr('style', 'display: block');
+                                //document.getElementsByClassName('aside-content-personal')[0].style.display = 'block';
 
                             } else {
                                 $('#result').html('Failed to make a server-side call. Check your configuration and console.');
-                                $('#signInButton').attr('style', 'display: display');
-                                $('#fbSignInButton').attr('style', 'display: display');
-                                $('.provider-login').attr('style', 'display: display');
+                                $('#signInButton').attr('style', 'display: block');
+                                $('#fbSignInButton').attr('style', 'display: block');
+                                $('.provider-login').attr('style', 'display: block');
                             }
                         }
 
@@ -132,11 +138,6 @@
 
         <!-- END FACEBOOK SIGN IN BUTTON -->
     </div>
-
-    <div id="result" class="wrapper-inside">
-
-    </div>
-
 </div>
 
 <script>

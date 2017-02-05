@@ -17,6 +17,13 @@ nmm.ViewModel = (function () {
 
     //User interactions
 
+    p.logout = function () {
+        this.model.user_id(null);
+        $.get("/disconnect/", function (data) {
+            console.log(data);
+        });
+    };
+
     p.displayMarkers = function (markers) {
         this._mapView.displayMarkers(markers);
     };
@@ -25,7 +32,7 @@ nmm.ViewModel = (function () {
         var fav = this.model.mapParams.currentMarker.userFavourite(),
             markerId = this.model.mapParams.currentMarker.id();
 
-        if(fav) {
+        if (fav) {
             this.model.removeFavourite(markerId);
         } else {
             this.model.storeFavourite(markerId);
@@ -106,6 +113,7 @@ nmm.ViewModel = (function () {
     p._init = function () {
         this.model = new nmm.Model(this);
         this._mapView = new nmm.MapView(this);
+        this.model.getOpenWeather();
     };
 
     return ViewModel;

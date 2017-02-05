@@ -141,12 +141,41 @@ nmm.Model = (function () {
                 return list;
             }
         });
+
+        this.weather = {
+            weather: ko.observable(),
+            icon: ko.observable(),
+            windSpeed: ko.observable(),
+            humidity: ko.observable(),
+            temp: ko.observable(),
+            tempMax: ko.observable(),
+            tempMin: ko.observable(),
+            warning: ko.observable()
+        };
     }
 
     var p = Model.prototype;
 
-    p.addListGenerator = function () {
+    p.getOpenWeather = function () {
+        var url = 'http://api.openweathermap.org/data/2.5/weather?q=porto,pt&units=metric&appid=7c0c2602f161b260daf19fa64ac7974a';
 
+        $.ajax({
+            url: url,
+            dataType: 'json'
+        })
+            .done(function (result) {
+                self.weather.weather(result.weather[0].description);
+                self.weather.icon('http://openweathermap.org/img/w/' + result.weather[0].icon + '.png');
+                self.weather.windSpeed(result.wind.speed);
+                self.weather.humidity(result.main.humidity);
+                self.weather.temp(result.main.temp);
+                self.weather.tempMax(result.main.temp_max);
+                self.weather.tempMin(result.main.temp_min);
+                self.weather.warning('');
+            })
+            .fail(function (error) {
+                this.weather.warning("It wasn't possible to retrieve current weather conditions.")
+            });
     };
 
     p.storeNewMarker = function (markerData) {
@@ -295,7 +324,6 @@ nmm.Model = (function () {
                 var data = result.Marker;
                 self.mapParams.markers = data;
                 self._controller.markersListLoadTaskEnd(true, data);
-                self.addListGenerator();
             })
             .fail(function (error) {
                 self._controller.markersListLoadTaskEnd(false);

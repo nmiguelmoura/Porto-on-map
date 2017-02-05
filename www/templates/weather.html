@@ -1,0 +1,15 @@
+<div id="weather">
+    <div>
+        <h2>Weather</h2>
+    </div>
+    <div>
+        <div>
+            <img src="" data-bind="attr: {src: model.weather.icon, alt: model.weather.weather}">
+            <p data-bind="text: model.weather.weather"></p>
+        </div>
+        <p><strong>Temperature</strong> <span data-bind="text: model.weather.temp"></span>ºC (min: <span data-bind="text: model.weather.tempMin"></span> — max: <span data-bind="text: model.weather.tempMax"></span>)</p>
+        <p><strong>Humidity</strong> <span data-bind="text: model.weather.humidity"></span>%</p>
+        <p><strong>Wind speed</strong> <span data-bind="text: model.weather.windSpeed"></span>km/h</p>
+        <p data-bind="text: model.weather.warning"></p>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<div id="my-area">
+    <div>
+        <h2>My area</h2>
+    </div>
+    <div data-bind="visible: !model.user_id()">
+        {% include "login_system.html" %}
+    </div>
+    <div data-bind="visible: model.user_id">
+        <div id="result">
+
+        </div>
+        <label><input type="checkbox"
+                      data-bind="checked: model.aside.checks.favOnly">Show only my
+            favourites</label>
+        <label><input type="checkbox" data-bind="checked: model.aside.checks.userOnly">Show
+            only my shares</label>
+        <div>
+            <button data-bind="click: logout">Logout</button>
+        </div>
+    </div>
+</div>
