@@ -7,7 +7,7 @@ nmm.MapView = (function () {
 
     var self;
 
-    function MapView (controller) {
+    function MapView(controller) {
         self = this;
         this._controller = controller;
         this._icons = null;
@@ -17,6 +17,27 @@ nmm.MapView = (function () {
 
     var p = MapView.prototype;
 
+    p.toggleMarkerAnimation = function (markerId) {
+        var i,
+            length = this._markers.length,
+            mk;
+
+        for (i = 0; i < length; i++) {
+            if (this._markers[i].id === markerId) {
+                mk = this._markers[i];
+                break;
+            }
+        }
+
+        if (mk) {
+            if (!mk.getAnimation()) {
+                mk.setAnimation(google.maps.Animation.BOUNCE);
+            } else {
+                mk.setAnimation(null);
+            }
+        }
+    };
+
     p.displayMarkers = function (markers) {
         var i,
             j,
@@ -24,10 +45,10 @@ nmm.MapView = (function () {
             lengthJ = markers.length,
             display;
 
-        for(i = 0; i < lengthI; i++) {
+        for (i = 0; i < lengthI; i++) {
             display = false;
-            for(j = 0; j < lengthJ; j++) {
-                if(this._markers[i].id === markers[j].id) {
+            for (j = 0; j < lengthJ; j++) {
+                if (this._markers[i].id === markers[j].id) {
                     display = true;
                     break;
                 }
