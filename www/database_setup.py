@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
 Base = declarative_base()
 
+'''This file sets up database with three tables - User, Marker and Favourite. Supports JSON API endpoint.'''
 
 class User(Base):
 

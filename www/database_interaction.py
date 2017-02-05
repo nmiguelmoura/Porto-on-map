@@ -4,9 +4,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, User, Marker, Favourite
 
-
 class Database_interaction:
-    '''Class used to populate database on setup.'''
+    '''This module manages all connections with database.'''
 
     engine = create_engine('sqlite:///mapapp.db')
     Base.metadata.bind = engine
@@ -14,15 +13,18 @@ class Database_interaction:
     session = DBSession()
 
     def query_user_by_id(self, id):
+        # Return user with given id from database.
         return self.session.query(User) \
             .filter_by(id=id) \
             .one()
 
     def query_all_markers(self):
+        # Return all markers in database.
         return self.session.query(Marker) \
             .all()
 
     def add_marker(self, title, type, latitude, longitude, description, user_id):
+        # Add a new marker to database.
         new_marker = Marker(
             title=title,
             type=type,
@@ -36,6 +38,7 @@ class Database_interaction:
         return new_marker
 
     def delete_favourite(self, user_id, marker_id):
+        # Delete a favourite from database.
         fav = self.session.query(Favourite) \
             .filter_by(user_id=user_id, marker_id=marker_id) \
             .one()
@@ -45,6 +48,7 @@ class Database_interaction:
         return 'Unfavourited marker %s' % marker_id
 
     def store_favourite(self, user_id, marker_id):
+        # Add a favourite to database.
         new_favourite = Favourite(
             user_id=user_id,
             marker_id=marker_id
@@ -55,6 +59,7 @@ class Database_interaction:
         return new_favourite
 
     def query_user_favourites(self, user_id):
+        # Return all users favourite locations.
         return self.session.query(Favourite) \
             .filter_by(user_id=user_id) \
             .all()
