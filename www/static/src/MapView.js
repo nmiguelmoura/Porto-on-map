@@ -17,6 +17,25 @@ nmm.MapView = (function () {
 
     var p = MapView.prototype;
 
+    p.displayMarkers = function (markers) {
+        var i,
+            j,
+            lengthI = this._markers.length,
+            lengthJ = markers.length,
+            display;
+
+        for(i = 0; i < lengthI; i++) {
+            display = false;
+            for(j = 0; j < lengthJ; j++) {
+                if(this._markers[i].id === markers[j].id) {
+                    display = true;
+                    break;
+                }
+            }
+            this._markers[i].setVisible(display);
+        }
+    };
+
     p.addNewMarker = function (mk) {
         var lat = parseFloat(mk.latitude),
             lng = parseFloat(mk.longitude);

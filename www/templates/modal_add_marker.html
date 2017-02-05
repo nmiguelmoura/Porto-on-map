@@ -2,11 +2,11 @@
     <h3>Place a new marker</h3>
     <form>
         <p class="topic">Title</p>
-        <input class="col-sm-12-12" type="text" name="title" placeholder="Type local title...">
+        <input class="col-sm-12-12" type="text" name="title" placeholder="Type local title..." data-bind="value: model.modals.add.title">
         <p class="topic">Coordinates</p>
-        <p class="text-small">Lat: <span></span> — Long: <span></span></p>
+        <p class="text-small">Lat: <span data-bind="text: model.modals.add.latitude"></span> — Long: <span data-bind="text: model.modals.add.longitude"></span></p>
         <p class="topic">Type</p>
-        <select class="col-sm-12-12" name="type">
+        <select class="col-sm-12-12" name="type" data-bind="value: model.modals.add.type">
             <option value="monument">Monument</option>
             <option value="museum">Museum</option>
             <option value="hotel">Hotel</option>
@@ -15,11 +15,11 @@
             <option value="other">Other</option>
         </select>
         <p class="topic">Description</p>
-        <textarea class="col-sm-12-12" name="description" placeholder="Describe the local..."></textarea>
-        <p class="warning"></p>
+        <textarea class="col-sm-12-12" name="description" placeholder="Describe the local..." maxlength="100" data-bind="value: model.modals.add.description"></textarea>
+        <p class="warning" data-bind="text: model.modals.add.warning"></p>
         <div>
             <button data-bind="click: closeModal">Cancel</button>
-            <button>Save</button>
+            <button data-bind="click: storeMarker">Save</button>
         </div>
     </form>
 </div>

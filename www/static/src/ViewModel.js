@@ -17,6 +17,32 @@ nmm.ViewModel = (function () {
 
     //User interactions
 
+    p.displayMarkers = function (markers) {
+        this._mapView.displayMarkers(markers);
+    };
+
+    p.toggleFavourite = function () {
+        var fav = this.model.mapParams.currentMarker.userFavourite(),
+            markerId = this.model.mapParams.currentMarker.id();
+
+        if(fav) {
+            this.model.removeFavourite(markerId);
+        } else {
+            this.model.storeFavourite(markerId);
+        }
+
+        this.model.mapParams.currentMarker.userFavourite(!fav);
+    };
+
+    p.updateExistingMarkers = function (marker) {
+        this.closeModal();
+        this._mapView.addNewMarker(marker);
+    };
+
+    p.storeMarker = function () {
+        this.model.evaluateInputData();
+    };
+
     p.closeModal = function () {
         this.model.modals.modalClass('modal-out');
         this.model.modals.addOn(false);
@@ -30,10 +56,15 @@ nmm.ViewModel = (function () {
         this.model.modals.viewOn(true);
     };
 
-    p.mapClicked = function () {
-        this.model.modals.modalClass('modal-in');
-        this.model.modals.addOn(true);
-        this.model.modals.viewOn(false);
+    p.mapClicked = function (latitude, longitude) {
+        if (this.model.user_id()) {
+            this.model.resetAddMarkerModal();
+            this.model.modals.add.latitude(latitude);
+            this.model.modals.add.longitude(longitude);
+            this.model.modals.modalClass('modal-in');
+            this.model.modals.addOn(true);
+            this.model.modals.viewOn(false);
+        }
     };
 
     p.userIdUpdate = function (user_id) {

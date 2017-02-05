@@ -30,11 +30,12 @@ nmm.Model = (function () {
                     return 'Loading markers';
 
                 case 2:
-                    if(self.user_id()) {
+                    if (self.user_id()) {
                         return 'Click to place a marker';
                     } else {
                         return 'Login to place markers';
                     }
+                    break;
             }
         });
 
@@ -63,9 +64,18 @@ nmm.Model = (function () {
                 longitude: ko.observable(),
                 description: ko.observable(),
                 sharedBy: ko.observable(),
-                sharerPic: ko.observable()
+                sharerPic: ko.observable(),
+                userFavourite: ko.observable()
             }
         };
+
+        this.mapParams.currentMarker.userFavouriteButtonClass = ko.computed(function () {
+            if (self.mapParams.currentMarker.userFavourite()) {
+                return 'favourite';
+            } else {
+                return 'unfavourite';
+            }
+        });
 
         //favourites
         this.userFavs = [];
@@ -74,11 +84,109 @@ nmm.Model = (function () {
         this.modals = {
             modalClass: ko.observable('modal-out'),
             addOn: ko.observable(false),
-            viewOn: ko.observable(false)
+            viewOn: ko.observable(false),
+            add: {
+                title: ko.observable(),
+                latitude: ko.observable(),
+                longitude: ko.observable(),
+                description: ko.observable(),
+                type: ko.observable('other'),
+                warning: ko.observable()
+            }
         };
+
+        this.aside = {
+            asideClass: ko.observable('modal-out'),
+            checks: {
+                monument: ko.observable(true),
+                museum: ko.observable(true),
+                hotel: ko.observable(true),
+                restaurant: ko.observable(true),
+                coffee: ko.observable(true),
+                other: ko.observable(true),
+                userOnly: ko.observable(false),
+                favOnly: ko.observable(false)
+            }
+        };
+
+        this.displayList = ko.computed(function () {
+            self.aside.checks.monument();
+            self.aside.checks.museum();
+            self.aside.checks.hotel();
+            self.aside.checks.restaurant();
+            self.aside.checks.coffee();
+            self.aside.checks.other();
+            self.aside.checks.userOnly();
+            self.aside.checks.monument();
+            if (self.appStatus.state() < 2) {
+                return self.mapParams.markers;
+            } else {
+                var list = [];
+                self.mapParams.markers.forEach(function (mk) {
+                    var display = self.aside.checks[mk.type]();
+
+                    if (self.aside.checks.userOnly() && mk.user_id !== self.user_id()) {
+                        display = false;
+                    }
+
+                    if (self.aside.checks.favOnly() && !self.checkIfUserFavourite(mk.id)) {
+                        display = false;
+                    }
+
+                    if (display) {
+                        list.push(mk);
+                    }
+                });
+                self._controller.displayMarkers(list);
+                return list;
+            }
+        });
     }
 
     var p = Model.prototype;
+
+    p.addListGenerator = function () {
+
+    };
+
+    p.storeNewMarker = function (markerData) {
+        //store in db
+        var self = this;
+        $.post("/add", markerData,
+            function (data, status) {
+                if (status === 'success') {
+                    self.mapParams.markers.push(data.Marker);
+                    self._controller.updateExistingMarkers(data.Marker);
+                } else {
+                    alert('Something went wrong while saving your marker.' +
+                        ' Please reload the page and try again.')
+                }
+            });
+    };
+
+    p.evaluateInputData = function () {
+        var m = this.modals.add;
+        if (m.title() && m.description && m.type) {
+            this.storeNewMarker({
+                title: m.title(),
+                latitude: m.latitude(),
+                longitude: m.longitude(),
+                type: m.type(),
+                description: m.description()
+            });
+        } else {
+            m.warning('Some info is missing.')
+        }
+    };
+
+    p.resetAddMarkerModal = function () {
+        this.modals.add.title('');
+        this.modals.add.latitude('');
+        this.modals.add.longitude('');
+        this.modals.add.description('');
+        this.modals.add.type('other');
+        this.modals.add.warning('');
+    };
 
     p.setCurrentMarker = function (markerId) {
         var i,
@@ -86,9 +194,9 @@ nmm.Model = (function () {
             mk,
             c = this.mapParams.currentMarker;
 
-        for(i = 0; i < length; i++) {
+        for (i = 0; i < length; i++) {
             mk = this.mapParams.markers[i];
-            if(mk.id === markerId) {
+            if (mk.id === markerId) {
                 c.id(mk.id);
                 c.title(mk.title);
                 c.type(mk.type);
@@ -97,9 +205,51 @@ nmm.Model = (function () {
                 c.description(mk.description);
                 c.sharedBy(mk.user_name);
                 c.sharerPic(mk.user_pic);
+                c.userFavourite(this.checkIfUserFavourite(markerId));
                 break;
             }
         }
+    };
+
+    p.removeFavourite = function (markerToRemove) {
+        var self = this;
+        $.post("/unfav", {
+                marker_id: markerToRemove
+            },
+            function (data, status) {
+                if (status === 'success') {
+                    var i,
+                        length = self.userFavs.length;
+
+                    for (i = 0; i < length; i++) {
+                        if (self.userFavs[i].marker_id === markerToRemove) {
+                            self.userFavs.splice(i, 1);
+                            break;
+                        }
+                    }
+                } else {
+                    alert('Something went wrong while unfavouriting this marker.' +
+                        ' Please reload the page and try again.')
+                }
+            });
+
+    };
+
+    p.storeFavourite = function (markerId) {
+        var self = this;
+        $.post("/fav", {
+                marker_id: markerId
+            },
+            function (data, status) {
+                if (status === 'success') {
+                    self.userFavs.push({
+                        marker_id: markerId
+                    });
+                } else {
+                    alert('Something went wrong while favouriting this marker.' +
+                        ' Please reload the page and try again.')
+                }
+            });
     };
 
     p.checkIfUserFavourite = function (markerId) {
@@ -145,6 +295,7 @@ nmm.Model = (function () {
                 var data = result.Marker;
                 self.mapParams.markers = data;
                 self._controller.markersListLoadTaskEnd(true, data);
+                self.addListGenerator();
             })
             .fail(function (error) {
                 self._controller.markersListLoadTaskEnd(false);

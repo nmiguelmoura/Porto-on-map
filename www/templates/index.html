@@ -18,7 +18,13 @@
             <p class="message-box" data-bind="text: model.appStatus.message"></p>
         </div>
         <aside>
-
+            <div>
+                <button></button>
+            </div>
+            <div>
+                {% include "checks.html" %}
+                {% include "list.html" %}
+            </div>
         </aside>
     </div>
     <div id="modals" class="modal-out" data-bind="model.modals.modalClass">
