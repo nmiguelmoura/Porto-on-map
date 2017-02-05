@@ -11,10 +11,10 @@ nmm.Model = (function () {
         self = this;
         this._controller = controller;
 
-        //user params
+        // Observable to store user id.
         this.user_id = ko.observable();
 
-        //app status
+        // Object to store observables related to app status.
         this.appStatus = {
             state: ko.observable(0)
         };
@@ -39,7 +39,7 @@ nmm.Model = (function () {
             }
         });
 
-        //map parameters
+        //Object to store map parameters
         this.mapParams = {
             init: {
                 city: 'Porto',
@@ -69,6 +69,8 @@ nmm.Model = (function () {
             }
         };
 
+        // Computed variable to store if user already favourited selected
+        // marker or not.
         this.mapParams.currentMarker.userFavouriteButtonClass = ko.computed(function () {
             if (self.mapParams.currentMarker.userFavourite()) {
                 return 'favourite';
@@ -80,7 +82,7 @@ nmm.Model = (function () {
         //favourites
         this.userFavs = [];
 
-        //modal info
+        // Object to store observables from modal window.
         this.modals = {
             modalClass: ko.observable('modal-out'),
             addOn: ko.observable(false),
@@ -95,6 +97,7 @@ nmm.Model = (function () {
             }
         };
 
+        // Object to store observables to aside menu.
         this.aside = {
             asideClass: ko.observable('menu-out'),
             asideContent: ko.observable('checks'),
@@ -110,7 +113,10 @@ nmm.Model = (function () {
             }
         };
 
+        // Array of markers to display
         this.displayList = ko.computed(function () {
+            // Calling diferent checks inside this function allows to update
+            // display list everytime one of the checks change.
             self.aside.checks.monument();
             self.aside.checks.museum();
             self.aside.checks.hotel();
@@ -123,14 +129,22 @@ nmm.Model = (function () {
                 return self.mapParams.markers;
             } else {
                 var list = [];
+                // Loop through all markers.
                 self.mapParams.markers.forEach(function (mk) {
+                    // Display given marker if its type is checked.
                     var display = self.aside.checks[mk.type]();
 
                     if (self.aside.checks.userOnly() && mk.user_id !== self.user_id()) {
+                        // If user checked to see only his shares
+                        // and marker creator does not correspond to user,
+                        // do not display it.
                         display = false;
                     }
 
                     if (self.aside.checks.favOnly() && !self.checkIfUserFavourite(mk.id)) {
+                        // If user checked  to see only his favourites
+                        // and marker is not a favourite,
+                        // do not display it.
                         display = false;
                     }
 
@@ -143,6 +157,7 @@ nmm.Model = (function () {
             }
         });
 
+        // Object to store weather data from open weather maps API.
         this.weather = {
             weather: ko.observable(),
             icon: ko.observable(),
@@ -160,11 +175,13 @@ nmm.Model = (function () {
     p.getOpenWeather = function () {
         var url = 'http://api.openweathermap.org/data/2.5/weather?q=porto,pt&units=metric&appid=7c0c2602f161b260daf19fa64ac7974a';
 
+        // Get open weather data.
         $.ajax({
             url: url,
             dataType: 'json'
         })
             .done(function (result) {
+                // Store relevant data to display to user.
                 self.weather.weather(result.weather[0].description);
                 self.weather.icon('http://openweathermap.org/img/w/' + result.weather[0].icon + '.png');
                 self.weather.windSpeed(result.wind.speed);
@@ -180,12 +197,16 @@ nmm.Model = (function () {
     };
 
     p.storeNewMarker = function (markerData) {
-        //store in db
+        // Store new marker in database
         var self = this;
         $.post("/add", markerData,
             function (data, status) {
                 if (status === 'success') {
+                    // Add marker data to markers array.
                     self.mapParams.markers.push(data.Marker);
+
+                    // Inform controller that a new marker has been saved,
+                    // to allow the update on map view.
                     self._controller.updateExistingMarkers(data.Marker);
                 } else {
                     alert('Something went wrong while saving your marker.' +
@@ -195,8 +216,10 @@ nmm.Model = (function () {
     };
 
     p.evaluateInputData = function () {
+        // Check if all necessary data has been provided by the user.
         var m = this.modals.add;
         if (m.title() && m.description && m.type) {
+            // If all data has been provided, store  it.
             this.storeNewMarker({
                 title: m.title(),
                 latitude: m.latitude(),
@@ -205,11 +228,13 @@ nmm.Model = (function () {
                 description: m.description()
             });
         } else {
+            // If some data is missing, warn user.
             m.warning('Some info is missing.')
         }
     };
 
     p.resetAddMarkerModal = function () {
+        // Erase all data from add marker modal window.
         this.modals.add.title('');
         this.modals.add.latitude('');
         this.modals.add.longitude('');
@@ -224,9 +249,11 @@ nmm.Model = (function () {
             mk,
             c = this.mapParams.currentMarker;
 
+        // Loop through markers and identify the correct one.
         for (i = 0; i < length; i++) {
             mk = this.mapParams.markers[i];
             if (mk.id === markerId) {
+                // Store marker info has current marker.
                 c.id(mk.id);
                 c.title(mk.title);
                 c.type(mk.type);
@@ -243,6 +270,8 @@ nmm.Model = (function () {
 
     p.removeFavourite = function (markerToRemove) {
         var self = this;
+
+        // Remove favourite from database
         $.post("/unfav", {
                 marker_id: markerToRemove
             },
@@ -252,6 +281,7 @@ nmm.Model = (function () {
                         length = self.userFavs.length;
 
                     for (i = 0; i < length; i++) {
+                        // Find favourite in favourites array and remove it.
                         if (self.userFavs[i].marker_id === markerToRemove) {
                             self.userFavs.splice(i, 1);
                             break;
@@ -267,11 +297,14 @@ nmm.Model = (function () {
 
     p.storeFavourite = function (markerId) {
         var self = this;
+
+        // Post new favourite in database from user input.
         $.post("/fav", {
                 marker_id: markerId
             },
             function (data, status) {
                 if (status === 'success') {
+                    // Push new favourite to favourites array.
                     self.userFavs.push({
                         marker_id: markerId
                     });
@@ -287,7 +320,7 @@ nmm.Model = (function () {
             length = this.userFavs.length;
 
         for (i = 0; i < length; i++) {
-            console.log(this.userFavs[i].marker_id, markerId);
+            // Check if user has favourited this location.
             if (this.userFavs[i].marker_id === markerId) {
                 return true;
             }
@@ -299,15 +332,19 @@ nmm.Model = (function () {
         if (user_id) {
             var self = this,
                 url = '/favourites/' + user_id + '/JSON/';
+
+            // Get user favourite locations from database.
             $.ajax({
                 url: url,
                 dataType: 'json'
             })
                 .done(function (result) {
+                    // Store user favourite locations.
                     self.userFavs = result.Favourite;
                 })
                 .fail(function (error) {
-                    alert("It wasn't possible to load your favourites. Please reload the page and try again.");
+                    alert("It wasn't possible to load your favourites. " +
+                        "Please reload the page and try again.");
                 });
         } else {
             this.userFavs = [];
@@ -317,16 +354,23 @@ nmm.Model = (function () {
     p.getDBMarkersList = function () {
         var self = this,
             url = '/markers/JSON/';
+
+        // Get markers data from database.
         $.ajax({
             url: url,
             dataType: 'json'
         })
             .done(function (result) {
                 var data = result.Marker;
+                // Store data.
                 self.mapParams.markers = data;
+
+                // Inform controller that markers data is available.
                 self._controller.markersListLoadTaskEnd(true, data);
             })
             .fail(function (error) {
+                // Inform controller that there was an error loading markers
+                // data from database.
                 self._controller.markersListLoadTaskEnd(false);
             });
     };
