@@ -47,11 +47,11 @@ aside .switch button {
 }
 
 .menu-out button{
-    background-position: -122.5px -1px;
+    background-position: -183.5px -1px;
 }
 
 .menu-in button {
-    background-position: -183.5px -1px;
+    background-position: -305.5px -1px;
 }
 
 aside .aside-content {
@@ -69,19 +69,19 @@ aside .selectors button {
 }
 
 aside .selectors button:nth-child(1) {
-    background-position: -244.5px -1px;
+    background-position: -122.5px -1px;
 }
 
 aside .selectors button:nth-child(2) {
-    background-position: -305px -1px;
+    background-position: -244.5px -1px;
 }
 
 aside .selectors button:nth-child(3) {
-    background-position: -365.5px -1px;
+    background-position: -426px -1px;
 }
 
 aside .selectors button:nth-child(4) {
-    background-position: -426px -1px;
+    background-position: -365.5px -1px;
 }
 
 #checks,
@@ -93,8 +93,7 @@ aside .selectors button:nth-child(4) {
 }
 
 aside h2 {
-    color: white;
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid #444;
     margin-bottom: 10px;
     font-size: 1.2em;
 }
@@ -108,12 +107,11 @@ aside .aside-specific-content {
 #my-area label {
     display: block;
     width: 100%;
-    color: white;
     margin-bottom: 5px;
 }
 
 #checks label:nth-child(1) {
-    color: greenyellow;
+    color: #00EE00;
 }
 
 #checks label:nth-child(2) {
@@ -129,7 +127,7 @@ aside .aside-specific-content {
 }
 
 #checks label:nth-child(5) {
-    color: #FFD698;
+    color: #FFC587;
 }
 
 #checks label:nth-child(6) {
@@ -137,7 +135,6 @@ aside .aside-specific-content {
 }
 
 #list li {
-    color: white;
     cursor:pointer;
     font-size: 0.875em;
     margin-bottom: 3px;
@@ -171,9 +168,9 @@ aside .aside-specific-content {
     top: 0;
     left: 0;
     opacity: 0;
-
 }
 
+#signInButton button,
 #fbSignInButton button {
     background: none;
     width: 153px !important;
@@ -184,7 +181,6 @@ aside .aside-specific-content {
 
 
 #result p {
-    color: white;
     margin-bottom: 15px;
 }
 
@@ -192,15 +188,14 @@ aside .aside-specific-content {
     width: calc(100% - 5px);
     height: 44px;
     background: none;
-    background-color: #EEE;
-    color: #444;
+    background-color: #444;
+    color: #EEE;
     font-size: 1em;
     margin-top: 15px;
 }
 
 
 #weather p {
-    color: white;
     font-size: 0.875em;
     margin-bottom: 15px;
 }

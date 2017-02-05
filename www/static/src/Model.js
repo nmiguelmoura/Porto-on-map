@@ -33,7 +33,7 @@ nmm.Model = (function () {
                     if (self.user_id()) {
                         return 'Click to place a marker';
                     } else {
-                        return 'Login to place markers and set favourites';
+                        return 'Login to place markers / favourites';
                     }
                     break;
             }

@@ -95,7 +95,6 @@ nmm.ViewModel = (function () {
     p.toggleAside = function () {
         var status = this.model.aside.asideClass() === 'menu-out' ? 'menu-in' : 'menu-out';
         this.model.aside.asideClass(status);
-        console.log(this.model.aside.asideClass());
     };
 
 

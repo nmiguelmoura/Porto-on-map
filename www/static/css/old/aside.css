@@ -54,7 +54,6 @@ aside {
 
 aside h2 {
     font-size: 1.2em;
-    color: white;
     border-bottom: 1px solid white;
     margin-bottom: 10px;
 }
@@ -81,7 +80,6 @@ aside .list-of-locals {
 }
 
 aside .list-of-locals p {
-    color: white;
     cursor: pointer;
     font-size: 0.9em;
     line-height: 1.5em;
@@ -118,7 +116,6 @@ aside .list-of-locals p {
 
 aside h4 {
     font-size: 1em;
-    color: white;
     margin-bottom: 10px;
 }
 
