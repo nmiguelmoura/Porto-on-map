@@ -193,7 +193,7 @@ nmm.Model = (function () {
                 self.weather.warning('');
             })
             .fail(function (error) {
-                this.weather.warning("It wasn't possible to retrieve current weather conditions.")
+                self.weather.warning("It wasn't possible to retrieve current weather conditions.")
             });
     };
 

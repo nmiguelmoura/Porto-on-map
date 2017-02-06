@@ -214,6 +214,15 @@ aside .aside-specific-content {
     margin-top: 8px;
 }
 
+#weather .warning,
+#weather .text-small {
+    font-size: 0.75em !important;
+}
+
+#weather .warning {
+    color: red;
+}
+
 
 
 @media screen and (min-width: 768px) {

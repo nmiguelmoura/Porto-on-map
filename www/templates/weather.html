@@ -10,6 +10,7 @@
         <p><strong>Temperature</strong> <span data-bind="text: model.weather.temp"></span>ºC<br>(min: <span data-bind="text: model.weather.tempMin"></span> — max: <span data-bind="text: model.weather.tempMax"></span>)</p>
         <p><strong>Humidity</strong> <span data-bind="text: model.weather.humidity"></span>%</p>
         <p><strong>Wind speed</strong> <span data-bind="text: model.weather.windSpeed"></span>km/h</p>
-        <p data-bind="text: model.weather.warning"></p>
+        <p class="warning" data-bind="text: model.weather.warning"></p>
+        <p class="text-small">(info provided by Open Weather Maps)</p>
     </div>
 </div>
