@@ -93,7 +93,7 @@
 .modal-window-view .unfavourite {
     margin: 5px;
     width: calc(100% - 10px);
-    height: 64px;
+    height: 44px;
     cursor: pointer;
     border: 1px solid #FF6262;
 }
@@ -104,17 +104,17 @@
 
 .modal-window-view .favourite .pic,
 .modal-window-view .unfavourite .pic {
-    width: 60px;
-    height: 60px;
-    margin: 0 auto;
+    width: 30px;
+    height: 30px;
+    margin: 5px auto;
     background-image: url(../assets/layout-sprite.png);
-    -webkit-background-size: 486px 61px;
-    background-size: 486px 61px;
+    -webkit-background-size: 243px 30px;
+    background-size: 243px 30px;
     overflow: hidden;
 }
 
 .modal-window-view .favourite .pic {
-    background-position: -61px -1px;
+    background-position: -30px -1px;
 }
 
 .modal-window-add input,
