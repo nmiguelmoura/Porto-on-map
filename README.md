@@ -1,4 +1,4 @@
-# Restaurant Menu Flask App
+# Get to know Porto
 
 This app was built using Flask on back-end and Knockout.js, Google Maps API, Foursquare API and Open Weather Maps API on front-end. Users can check previously placed markers on a map of city of Porto and check description of each one.
 
